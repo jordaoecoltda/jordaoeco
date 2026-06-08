@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jordão & Co | Intermediação de Negócios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111111;
+      --card: #161616;
+      --gold: #c9a84c;
+      --gold-light: #e2c47a;
+      --white: #f5f0e8;
+      --muted: #888880;
+      --border: rgba(201,168,76,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+    }
+
+    .logo span { color: var(--white); font-weight: 300; }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(201,168,76,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%),
+        linear-gradient(160deg, #0f0f0f 0%, #0a0a0a 100%);
+    }
+
+    .hero-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 55%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    }
+
+    .hero-tag {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      max-width: 700px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      margin-top: 32px;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.7s;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.9s;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--black);
+      padding: 14px 36px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 120px 60px;
+      position: relative;
+    }
+
+    .section-tag {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 300;
+      line-height: 1.1;
+      max-width: 600px;
+    }
+
+    .section-title em { font-style: italic; color: var(--gold); }
+
+    /* SOBRE */
+    .sobre {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 64px;
+      align-items: center;
+    }
+
+    .sobre-text p {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .sobre-text p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .sobre-nums {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .num-card {
+      background: var(--card);
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+    }
+
+    .num-card .number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .num-card .label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    /* COMO FUNCIONA */
+    .como {
+      border-top: 1px solid var(--border);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .step {
+      background: var(--card);
+      padding: 48px 32px;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .step:hover { border-color: var(--gold); }
+
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .step h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* SERVIÇOS */
+    .servicos {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .servicos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+
+    .servico-card {
+      background: var(--card);
+      padding: 48px 36px;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .servico-card:hover {
+      border-color: var(--gold);
+      background: #1a1a1a;
+    }
+
+    .servico-icon {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    .servico-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .servico-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* CTA FINAL */
+    .cta-section {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 140px 60px;
+    }
+
+    .cta-section .section-title {
+      margin: 0 auto 16px;
+      text-align: center;
+    }
+
+    .cta-section p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 auto 48px;
+      max-width: 420px;
+      line-height: 1.9;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    footer .logo { font-size: 16px; }
+
+    /* ANIM */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      nav a { display: none; }
+      .hero { padding: 0 24px 60px; }
+      section { padding: 80px 24px; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .servicos-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Jordão <span>& Co</span></div>
+  <a href="#como">Como funciona</a>
+  <a href="#servicos">Serviços</a>
+  <a href="https://wa.me/5511921578721" target="_blank">Contato</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div style="position:relative;">
+    <p class="hero-tag">Intermediação de Negócios · Santo André, SP</p>
+    <h1>Negócios que <em>fecham.</em><br>Com quem entende.</h1>
+    <p class="hero-sub">Conectamos vendedores e compradores com segurança, discrição e resultado. Do anúncio ao contrato, cuidamos de tudo.</p>
+    <div class="hero-cta">
+      <a href="https://wa.me/5511921578721" class="btn-gold" target="_blank">Falar com a equipe</a>
+      <a href="#como" class="btn-ghost">Como funciona</a>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <p class="section-tag">Sobre nós</p>
+  <h2 class="section-title">A intermediação certa <em>muda o resultado.</em></h2>
+  <div class="sobre-grid">
+    <div class="sobre-text">
+      <p>A <strong>Jordão & Co</strong> é uma empresa de intermediação de negócios especializada em conectar quem quer vender com quem quer comprar — com segurança, transparência e eficiência em cada etapa.</p>
+      <p>Atuamos principalmente no segmento automotivo premium, mas também intermediamos outros tipos de negócios e ativos de valor. Nosso diferencial é a <strong>gestão completa do processo</strong>: do primeiro contato ao fechamento do contrato.</p>
+      <p>Você não precisa aparecer, negociar nem se preocupar com documentação. <strong>Só precisa receber.</strong></p>
+    </div>
+    <div class="sobre-nums">
+      <div class="num-card">
+        <div class="number">100%</div>
+        <div class="label">Processo gerenciado</div>
+      </div>
+      <div class="num-card">
+        <div class="number">0</div>
+        <div class="label">Surpresas no processo</div>
+      </div>
+      <div class="num-card">
+        <div class="number">SP</div>
+        <div class="label">Base em Santo André</div>
+      </div>
+      <div class="num-card">
+        <div class="number">CNPJ</div>
+        <div class="label">Empresa registrada</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="como">
+  <p class="section-tag">Processo</p>
+  <h2 class="section-title">Do primeiro contato <em>ao negócio fechado.</em></h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Avaliação</h3>
+      <p>Analisamos o bem ou negócio, definimos o preço de mercado e a estratégia de venda.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Divulgação</h3>
+      <p>Criamos o anúncio, produzimos as fotos e veiculamos nos canais certos para o perfil de comprador ideal.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Negociação</h3>
+      <p>Gerenciamos todos os contatos, filtramos interessados e conduzimos a negociação com segurança.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Fechamento</h3>
+      <p>Cuidamos de toda a documentação, contrato e transferência. Você recebe o valor acordado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos">
+  <p class="section-tag">Serviços</p>
+  <h2 class="section-title">O que a <em>Jordão & Co</em> faz por você.</h2>
+  <div class="servicos-grid">
+    <div class="servico-card">
+      <div class="servico-icon"></div>
+      <h3>Veículos Premium</h3>
+      <p>Intermediação de carros, SUVs, esportivos e veículos de alto valor. Compradores qualificados, negociação segura.</p>
+    </div>
+    <div class="servico-card">
+      <div class="servico-icon"></div>
+      <h3>Outros Negócios</h3>
+      <p>Imóveis, maquinários, empresas e ativos em geral. Se tem valor, a gente encontra o comprador certo.</p>
+    </div>
+    <div class="servico-card">
+      <div class="servico-icon"></div>
+      <h3>Consultoria de Venda</h3>
+      <p>Precificação, estratégia de anúncio, preparação do bem para venda e orientação jurídica no fechamento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <p class="section-tag">Contato</p>
+  <h2 class="section-title">Pronto para <em>fechar negócio?</em></h2>
+  <p>Entre em contato agora. Sem compromisso, sem burocracia. A gente avalia e te diz o que é possível fazer.</p>
+  <a href="https://wa.me/5511921578721" class="btn-gold" target="_blank">Falar pelo WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Jordão <span>& Co</span></div>
+  <p>Santo André, SP · CNPJ 66.684.965/0001-59</p>
+  <p>© 2026 Jordão & Co Ltda. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
