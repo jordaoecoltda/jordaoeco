@@ -208,8 +208,11 @@
     .servicos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 72px; }
     .servico-card { background: var(--card); border: 1px solid var(--border); padding: 52px 36px; position: relative; overflow: hidden; transition: border-color 0.4s, transform 0.3s, box-shadow 0.3s; }
     .servico-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
-    .servico-svg { width: 100%; height: 110px; margin-bottom: 36px; opacity: 0.45; transition: opacity 0.4s; }
-    .servico-card:hover .servico-svg { opacity: 0.75; }
+    .servico-photo { position: relative; width: 100%; height: 200px; overflow: hidden; margin-bottom: 32px; background: #0f0f0f; }
+    .servico-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; filter: brightness(0.6) saturate(0.7); transition: transform 0.7s ease, filter 0.5s ease; display: block; }
+    .servico-card:hover .servico-photo img { transform: scale(1.05); filter: brightness(0.75) saturate(0.85); }
+    .servico-photo-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(19,19,19,0.05) 0%, rgba(19,19,19,0.55) 65%, #131313 100%); pointer-events: none; }
+    .servico-photo::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, var(--gold), transparent 70%); }
     .servico-card h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 14px; }
     .servico-card p { font-size: 13px; color: var(--muted); line-height: 1.9; margin-bottom: 28px; }
     .servico-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--border2); padding: 7px 14px; }
@@ -492,78 +495,28 @@
   <h2 class="section-title reveal">O que a Jordão & Co<br><em>intermedia.</em></h2>
   <div class="servicos-grid">
     <div class="servico-card reveal reveal-d1">
-      <svg class="servico-svg" viewBox="0 0 300 110" fill="none">
-        <ellipse cx="150" cy="108" rx="116" ry="3" fill="rgba(200,168,75,0.07)"/>
-        <path d="M12 84 C14 80 19 73 26 68 L34 60 C44 50 58 43 74 39 L88 34 C93 31 99 29 106 28 L185 27 C199 27 213 33 222 44 L237 63 C241 70 245 77 249 82 L252 84 Z" stroke="#c8a84b" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
-        <path d="M88 34 C93 31 99 29 106 28 L150 27 L145 52 L92 53 Z" stroke="#c8a84b" stroke-width="0.75" fill="none" opacity="0.5"/>
-        <path d="M153 27 L185 27 C199 27 213 33 222 44 L220 51 L148 52 Z" stroke="#c8a84b" stroke-width="0.75" fill="none" opacity="0.5"/>
-        <line x1="150" y1="27" x2="148" y2="53" stroke="#c8a84b" stroke-width="1.1" opacity="0.4"/>
-        <path d="M15 75 L24 69" stroke="#c8a84b" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
-        <path d="M247 75 L249 83" stroke="#c8a84b" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
-        <path d="M100 60 C140 61 168 61 205 59" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.28"/>
-        <circle cx="80" cy="89" r="18" stroke="#c8a84b" stroke-width="1.3" fill="none"/>
-        <circle cx="80" cy="89" r="8" stroke="#c8a84b" stroke-width="0.65" fill="none"/>
-        <circle cx="80" cy="89" r="2" fill="#c8a84b" opacity="0.4"/>
-        <circle cx="220" cy="89" r="18" stroke="#c8a84b" stroke-width="1.3" fill="none"/>
-        <circle cx="220" cy="89" r="8" stroke="#c8a84b" stroke-width="0.65" fill="none"/>
-        <circle cx="220" cy="89" r="2" fill="#c8a84b" opacity="0.4"/>
-      </svg>
+      <div class="servico-photo">
+        <img src="https://images.unsplash.com/photo-1751467928321-a2fcd7566fde?auto=format&fit=crop&w=900&q=80" alt="Veículos Premium">
+        <div class="servico-photo-overlay"></div>
+      </div>
       <h3>Veículos Premium</h3>
       <p>Sedãs, SUVs, esportivos e veículos de luxo. Compradores qualificados, processo discreto e seguro.</p>
       <div class="servico-tag"><span>★</span><span>Especialidade principal</span></div>
     </div>
     <div class="servico-card reveal reveal-d2">
-      <svg class="servico-svg" viewBox="0 0 300 110" fill="none">
-        <ellipse cx="150" cy="108" rx="118" ry="3" fill="rgba(200,168,75,0.07)"/>
-        <path d="M14 84 C16 79 21 73 28 67 L38 56 C50 46 64 38 80 34 L94 28 C99 25 105 23 112 22 L186 21 C200 21 214 27 223 38 L234 55 L245 71 C248 76 251 80 254 84 Z" stroke="#c8a84b" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
-        <path d="M94 28 C99 25 105 23 112 22 L150 21 L146 48 L96 50 Z" stroke="#c8a84b" stroke-width="0.75" fill="none" opacity="0.5"/>
-        <path d="M153 21 L186 21 C200 21 214 27 223 38 L222 47 L149 48 Z" stroke="#c8a84b" stroke-width="0.75" fill="none" opacity="0.5"/>
-        <line x1="150" y1="21" x2="149" y2="49" stroke="#c8a84b" stroke-width="1.1" opacity="0.4"/>
-        <path d="M17 74 L28 67" stroke="#c8a84b" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
-        <path d="M252 73 L254 83" stroke="#c8a84b" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
-        <path d="M112 57 C148 58 168 58 208 56" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.28"/>
-        <path d="M114 22 L184 21 M114 20 L184 19" stroke="#c8a84b" stroke-width="0.5" opacity="0.25"/>
-        <circle cx="82" cy="89" r="20" stroke="#c8a84b" stroke-width="1.3" fill="none"/>
-        <circle cx="82" cy="89" r="10" stroke="#c8a84b" stroke-width="0.65" fill="none"/>
-        <circle cx="82" cy="89" r="2.5" fill="#c8a84b" opacity="0.4"/>
-        <circle cx="222" cy="89" r="20" stroke="#c8a84b" stroke-width="1.3" fill="none"/>
-        <circle cx="222" cy="89" r="10" stroke="#c8a84b" stroke-width="0.65" fill="none"/>
-        <circle cx="222" cy="89" r="2.5" fill="#c8a84b" opacity="0.4"/>
-      </svg>
+      <div class="servico-photo">
+        <img src="https://images.unsplash.com/photo-1559511206-f5ade67b8484?auto=format&fit=crop&w=900&q=80" alt="SUVs e Utilitários">
+        <div class="servico-photo-overlay"></div>
+      </div>
       <h3>SUVs & Utilitários</h3>
       <p>Veículos de maior porte, blindados ou não. Avaliação especializada e rede de compradores corporativos.</p>
       <div class="servico-tag"><span>★</span><span>Alta demanda</span></div>
     </div>
     <div class="servico-card reveal reveal-d3">
-      <svg class="servico-svg" viewBox="0 0 300 110" fill="none">
-        <line x1="22" y1="95" x2="278" y2="95" stroke="#c8a84b" stroke-width="0.4" opacity="0.22"/>
-        <rect x="118" y="12" width="64" height="83" stroke="#c8a84b" stroke-width="1.2" fill="none"/>
-        <rect x="126" y="22" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.5"/>
-        <rect x="144" y="22" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.5"/>
-        <rect x="162" y="22" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.5"/>
-        <rect x="126" y="40" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.5"/>
-        <rect x="144" y="40" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.5"/>
-        <rect x="162" y="40" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.5"/>
-        <rect x="126" y="58" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.38"/>
-        <rect x="144" y="58" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.38"/>
-        <rect x="162" y="58" width="12" height="9" stroke="#c8a84b" stroke-width="0.55" fill="none" opacity="0.38"/>
-        <rect x="52" y="35" width="58" height="60" stroke="#c8a84b" stroke-width="1" fill="none"/>
-        <rect x="60" y="44" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.45"/>
-        <rect x="76" y="44" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.45"/>
-        <rect x="92" y="44" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.45"/>
-        <rect x="60" y="60" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.38"/>
-        <rect x="76" y="60" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.38"/>
-        <rect x="92" y="60" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.38"/>
-        <rect x="190" y="27" width="58" height="68" stroke="#c8a84b" stroke-width="1" fill="none"/>
-        <rect x="198" y="37" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.45"/>
-        <rect x="214" y="37" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.45"/>
-        <rect x="230" y="37" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.45"/>
-        <rect x="198" y="54" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.38"/>
-        <rect x="214" y="54" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.38"/>
-        <rect x="230" y="54" width="10" height="8" stroke="#c8a84b" stroke-width="0.5" fill="none" opacity="0.38"/>
-        <line x1="150" y1="12" x2="150" y2="5" stroke="#c8a84b" stroke-width="0.8" opacity="0.45"/>
-        <circle cx="150" cy="4" r="1.5" fill="#c8a84b" opacity="0.4"/>
-      </svg>
+      <div class="servico-photo">
+        <img src="https://images.unsplash.com/photo-1755288348835-dc6c29852299?auto=format&fit=crop&w=900&q=80" alt="Outros Negócios">
+        <div class="servico-photo-overlay"></div>
+      </div>
       <h3>Outros Negócios</h3>
       <p>Imóveis, maquinários, empresas e ativos de valor. Se tem mercado, encontramos o comprador certo.</p>
       <div class="servico-tag"><span>★</span><span>Consulte disponibilidade</span></div>
