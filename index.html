@@ -98,7 +98,7 @@
       color: var(--gold);
       margin-bottom: 28px;
       opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.3s;
+      animation: fadeUp 0.8s ease forwards 5.0s;
     }
 
     .hero h1 {
@@ -109,7 +109,7 @@
       letter-spacing: -0.01em;
       max-width: 700px;
       opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.5s;
+      animation: fadeUp 0.8s ease forwards 5.2s;
     }
 
     .hero h1 em {
@@ -125,7 +125,7 @@
       max-width: 420px;
       line-height: 1.8;
       opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.7s;
+      animation: fadeUp 0.8s ease forwards 5.4s;
     }
 
     .hero-cta {
@@ -134,7 +134,7 @@
       gap: 20px;
       align-items: center;
       opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.9s;
+      animation: fadeUp 0.8s ease forwards 5.6s;
     }
 
     .btn-gold {
@@ -204,8 +204,8 @@
 
     .sobre-grid {
       display: grid;
-      grid-template-columns: 260px 1fr 260px;
-      gap: 64px;
+      grid-template-columns: 280px 1fr 280px;
+      gap: 56px;
       margin-top: 64px;
       align-items: start;
     }
@@ -237,10 +237,10 @@
     }
 
     .sobre-text p {
-      font-size: 14px;
-      line-height: 2;
-      color: var(--muted);
-      margin-bottom: 20px;
+      font-size: 17px;
+      line-height: 1.9;
+      color: #b0ada6;
+      margin-bottom: 28px;
     }
 
     .sobre-text p strong {
@@ -403,7 +403,36 @@
 
     footer .logo { font-size: 16px; }
 
-    /* ANIMAÇÃO — preservada integralmente */
+    /* ── INTRO: LOGO REVEAL ─────────────────────────── */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: introOut 1s ease forwards 4.8s;
+    }
+
+    @keyframes introOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    .intro-logo-img {
+      width: min(400px, 78vw);
+      mix-blend-mode: screen; /* fundo escuro da imagem some, só ouro e branco aparecem */
+      opacity: 0;
+      animation: logoReveal 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.5s;
+    }
+
+    @keyframes logoReveal {
+      0%   { opacity: 0; transform: scale(0.86) translateY(12px); filter: brightness(0.4); }
+      60%  { opacity: 1; filter: brightness(1.15); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1); }
+    }
+
+    /* ── HERO FADEUP — atrasado para entrar após intro ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -424,9 +453,17 @@
 </head>
 <body>
 
+<!-- INTRO: LOGO REVEAL -->
+<div id="intro">
+  <img src="assets/logo.jpg" alt="Jordão & Co" class="intro-logo-img">
+</div>
+
 <!-- NAV -->
 <nav>
-  <div class="logo">Jordão <span>& Co</span></div>
+  <a href="#" style="display:flex;align-items:center;">
+    <img src="assets/logo.jpg" alt="Jordão & Co"
+         style="height:44px; mix-blend-mode:screen; opacity:0.92;">
+  </a>
   <a href="#sobre">Sobre</a>
   <a href="#servicos">Serviços</a>
   <a href="https://wa.me/5511921578721" target="_blank">Contato</a>
@@ -571,5 +608,12 @@
   <p>© 2026 Jordão & Co Ltda. Todos os direitos reservados.</p>
 </footer>
 
+
+<script>
+  setTimeout(() => {
+    const el = document.getElementById('intro');
+    if (el) el.remove();
+  }, 6300);
+</script>
 </body>
 </html>
