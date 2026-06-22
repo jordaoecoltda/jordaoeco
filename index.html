@@ -3,617 +3,1376 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jordão & Co | Tecnologia & Negócios</title>
-  <meta name="description" content="Jordão & Co — Desenvolvemos sites, sistemas, CRMs, apps e IAs para empresas que crescem. E intermediamos negócios com discrição e resultado.">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Jordão & Co | Soluções Digitais e Inovação com Inteligência Artificial</title>
+  <meta name="description" content="Jordão & Co — Transformamos ideias em sistemas inteligentes que geram resultados. Desenvolvimento de aplicativos, sistemas web, IA, automação e plataformas empresariais para empresas que desejam crescer e escalar." />
+  <meta name="keywords" content="desenvolvimento de software, inteligência artificial, automação, aplicativos, sistemas web, ERP, agentes de IA, sistemas para licitações, sistemas para advocacia, dashboard, business intelligence" />
+  <meta name="author" content="Jordão & Co" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.jordaoeconegocio.com.br/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.jordaoeconegocio.com.br/" />
+  <meta property="og:title" content="Jordão & Co | Soluções Digitais e Inovação" />
+  <meta property="og:description" content="Transformamos Ideias em Sistemas Inteligentes que Geram Resultados." />
+  <meta property="og:site_name" content="Jordão & Co" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jordão & Co | Soluções Digitais e Inovação" />
+  <meta name="twitter:description" content="Transformamos Ideias em Sistemas Inteligentes que Geram Resultados." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* ─── DESIGN TOKENS ─────────────────────────────────── */
     :root {
-      --black: #0a0a0a;
-      --dark: #111111;
-      --card: #161616;
-      --gold: #c9a84c;
-      --gold-light: #e2c47a;
-      --white: #f5f0e8;
-      --muted: #888880;
-      --border: rgba(201,168,76,0.15);
+      --bg:           #0A0A0A;
+      --bg-2:         #0D0D0D;
+      --bg-card:      rgba(255,255,255,0.03);
+      --bg-card-h:    rgba(255,255,255,0.06);
+      --gold:         #C9A84C;
+      --gold-l:       #E4C76B;
+      --gold-d:       #9A7A30;
+      --white:        #FFFFFF;
+      --gray:         #7A7A7A;
+      --gray-l:       #555555;
+      --border:       rgba(201,168,76,0.14);
+      --border-h:     rgba(201,168,76,0.40);
+      --font:         'Inter', sans-serif;
+      --font-d:       'Space Grotesk', sans-serif;
+      --radius:       14px;
+      --transition:   0.35s cubic-bezier(.4,0,.2,1);
     }
 
-    html { scroll-behavior: smooth; }
-
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; font-size:16px; }
     body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
+      background:var(--bg);
+      color:var(--white);
+      font-family:var(--font);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    a { color:inherit; text-decoration:none; }
+    img { max-width:100%; display:block; }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────── */
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--gold-d); border-radius:99px; }
+
+    /* ─── CURSOR ─────────────────────────────────────────── */
+    body { cursor:none; }
+    #cur, #cur-ring {
+      position:fixed; top:0; left:0; pointer-events:none; z-index:99999;
+      transform:translate(-50%,-50%); border-radius:50%;
+    }
+    #cur {
+      width:10px; height:10px;
+      background:var(--gold);
+      transition:width .2s, height .2s;
+      mix-blend-mode:difference;
+    }
+    #cur-ring {
+      width:38px; height:38px;
+      border:1.5px solid rgba(201,168,76,.5);
+      transition:width .2s, height .2s, border-color .2s;
+    }
+    .cur-big #cur { width:18px; height:18px; }
+    .cur-big #cur-ring { width:58px; height:58px; border-color:var(--gold); }
+
+    /* ─── LOADER ─────────────────────────────────────────── */
+    #loader {
+      position:fixed; inset:0; z-index:99998;
+      background:var(--bg);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      transition:opacity .6s, visibility .6s;
+    }
+    #loader.out { opacity:0; visibility:hidden; }
+    .ld-logo {
+      font-family:var(--font-d);
+      font-size:2.4rem; font-weight:700; letter-spacing:-.03em;
+      color:var(--white);
+    }
+    .ld-logo em { font-style:normal; color:var(--gold); }
+    .ld-bar {
+      width:180px; height:2px;
+      background:rgba(255,255,255,.06);
+      border-radius:99px; overflow:hidden;
+      margin-top:22px;
+    }
+    .ld-fill {
+      height:100%;
+      background:linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-l));
+      border-radius:99px;
+      width:0%; transition:width .05s linear;
+    }
+    .ld-tag {
+      margin-top:10px; font-size:.7rem;
+      color:var(--gray); letter-spacing:.12em; text-transform:uppercase;
     }
 
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 60px;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    /* ─── NAV ────────────────────────────────────────────── */
+    #nav {
+      position:fixed; top:0; left:0; right:0; z-index:900;
+      padding:0 32px;
+      transition:background var(--transition), border-bottom var(--transition), backdrop-filter var(--transition);
     }
-
-    .logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--gold);
+    #nav.scrolled {
+      background:rgba(10,10,10,.88);
+      backdrop-filter:blur(24px) saturate(180%);
+      border-bottom:1px solid var(--border);
     }
-
-    .logo span { color: var(--white); font-weight: 300; }
-
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transition: color 0.3s;
+    .nav-wrap {
+      max-width:1260px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+      height:70px;
     }
-
-    nav a:hover { color: var(--gold); }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 60px 80px;
-      position: relative;
-      overflow: hidden;
+    .nav-logo {
+      font-family:var(--font-d); font-size:1.2rem; font-weight:700;
+      letter-spacing:-.02em; color:var(--white);
     }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 70% 40%, rgba(201,168,76,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%),
-        linear-gradient(160deg, #0f0f0f 0%, #0a0a0a 100%);
+    .nav-logo em { font-style:normal; color:var(--gold); }
+    .nav-links {
+      display:flex; align-items:center; gap:28px; list-style:none;
     }
-
-    .hero-line {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 55%;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    .nav-links a {
+      font-size:.845rem; font-weight:500; color:var(--gray);
+      transition:color .2s;
     }
-
-    .hero-tag {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 5.0s;
+    .nav-links a:hover { color:var(--white); }
+    .nav-btn {
+      background:linear-gradient(135deg, var(--gold-d), var(--gold));
+      color:#0A0A0A !important; font-weight:700 !important;
+      padding:9px 18px; border-radius:9px;
+      transition:transform .2s, box-shadow .2s !important;
     }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(52px, 7vw, 96px);
-      font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: -0.01em;
-      max-width: 700px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 5.2s;
+    .nav-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,168,76,.35); }
+    .burger {
+      display:none; flex-direction:column; gap:5px; cursor:pointer;
     }
+    .burger span { width:22px; height:2px; background:var(--white); border-radius:2px; transition:all .3s; }
 
-    .hero h1 em {
-      font-style: italic;
-      color: var(--gold);
+    /* ─── MOBILE MENU ────────────────────────────────────── */
+    #mob {
+      display:none; position:fixed; inset:0; z-index:899;
+      background:rgba(8,8,8,.97); backdrop-filter:blur(24px);
+      flex-direction:column; align-items:center; justify-content:center; gap:28px;
     }
+    #mob.open { display:flex; }
+    #mob-close {
+      position:absolute; top:22px; right:28px;
+      background:none; border:none; color:var(--white); font-size:1.4rem; cursor:pointer;
+    }
+    #mob a {
+      font-family:var(--font-d); font-size:2rem; font-weight:700;
+      color:var(--white); transition:color .2s;
+    }
+    #mob a:hover { color:var(--gold); }
 
+    /* ─── HERO ───────────────────────────────────────────── */
+    #hero {
+      position:relative; min-height:100vh;
+      display:flex; align-items:center;
+      overflow:hidden;
+    }
+    #hero-canvas {
+      position:absolute; inset:0; z-index:0;
+    }
+    /* radial gradient overlay at bottom */
+    #hero::after {
+      content:''; position:absolute; bottom:0; left:0; right:0;
+      height:200px;
+      background:linear-gradient(to top, var(--bg), transparent);
+      z-index:1; pointer-events:none;
+    }
+    .hero-body {
+      position:relative; z-index:2;
+      max-width:1260px; margin:0 auto; padding:0 32px; padding-top:70px;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:5px 15px; border-radius:99px;
+      border:1px solid var(--border);
+      background:rgba(201,168,76,.05);
+      font-size:.7rem; font-weight:600; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--gold);
+      margin-bottom:22px;
+    }
+    .badge-dot {
+      width:6px; height:6px; background:var(--gold); border-radius:50%;
+      animation:blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+    .hero-h1 {
+      font-family:var(--font-d);
+      font-size:clamp(2.4rem,6vw,5rem);
+      font-weight:700; line-height:1.08; letter-spacing:-.035em;
+      max-width:820px; margin-bottom:22px;
+    }
+    .hero-h1 .grad {
+      background:linear-gradient(120deg, var(--gold-d) 0%, var(--gold) 45%, var(--gold-l) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
     .hero-sub {
-      margin-top: 32px;
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      max-width: 420px;
-      line-height: 1.8;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 5.4s;
+      font-size:clamp(.95rem,1.6vw,1.15rem);
+      color:var(--gray); line-height:1.75; max-width:580px;
+      margin-bottom:36px;
+    }
+    .hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-g {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:13px 26px; border-radius:10px;
+      font-weight:700; font-size:.875rem; letter-spacing:.02em;
+      background:linear-gradient(135deg, var(--gold-d), var(--gold));
+      color:#0A0A0A;
+      transition:transform .25s, box-shadow .25s;
+    }
+    .btn-g:hover { transform:translateY(-3px); box-shadow:0 14px 36px rgba(201,168,76,.4); }
+    .btn-o {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:13px 26px; border-radius:10px;
+      font-weight:600; font-size:.875rem;
+      background:var(--bg-card); border:1px solid var(--border); color:var(--white);
+      transition:transform .25s, border-color .25s, background .25s;
+    }
+    .btn-o:hover { transform:translateY(-3px); border-color:var(--border-h); background:var(--bg-card-h); }
+    .hero-numbers {
+      display:flex; gap:36px; flex-wrap:wrap;
+      margin-top:52px; padding-top:36px;
+      border-top:1px solid var(--border);
+    }
+    .hn-item { display:flex; flex-direction:column; }
+    .hn-num {
+      font-family:var(--font-d); font-size:2rem; font-weight:700; color:var(--gold);
+      line-height:1;
+    }
+    .hn-lbl { font-size:.75rem; color:var(--gray); margin-top:5px; }
+    .hero-scroll {
+      position:absolute; bottom:28px; left:50%;
+      transform:translateX(-50%); z-index:2;
+      display:flex; flex-direction:column; align-items:center; gap:7px;
+      font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gray);
+      animation:hscroll 2.2s ease-in-out infinite;
+    }
+    @keyframes hscroll { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(7px);} }
+    .scroll-line { width:1px; height:36px; background:linear-gradient(to bottom, var(--gold), transparent); }
+
+    /* ─── TECH TICKER ────────────────────────────────────── */
+    #ticker {
+      background:var(--bg-2);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:14px 0; overflow:hidden;
+    }
+    .ticker-track {
+      display:flex; gap:20px;
+      animation:ticker 28s linear infinite;
+      width:max-content;
+    }
+    .ticker-track:hover { animation-play-state:paused; }
+    @keyframes ticker { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+    .t-chip {
+      display:flex; align-items:center; gap:8px;
+      padding:7px 18px; border-radius:99px;
+      border:1px solid var(--border); background:var(--bg-card);
+      font-size:.75rem; font-weight:500; color:var(--gray); white-space:nowrap;
+      transition:border-color .2s, color .2s;
+    }
+    .t-chip:hover { border-color:var(--border-h); color:var(--white); }
+
+    /* ─── SECTIONS COMMON ────────────────────────────────── */
+    section { padding:96px 32px; }
+    .wrap { max-width:1260px; margin:0 auto; }
+    .sec-badge {
+      display:inline-flex; align-items:center; gap:7px;
+      padding:4px 13px; border-radius:99px;
+      border:1px solid var(--border); background:rgba(201,168,76,.05);
+      font-size:.68rem; font-weight:700; letter-spacing:.09em;
+      text-transform:uppercase; color:var(--gold);
+      margin-bottom:14px;
+    }
+    .sec-h2 {
+      font-family:var(--font-d);
+      font-size:clamp(1.8rem,3.5vw,2.9rem);
+      font-weight:700; letter-spacing:-.028em; line-height:1.14;
+      margin-bottom:14px;
+    }
+    .sec-p {
+      font-size:1.02rem; color:var(--gray); line-height:1.75; max-width:540px;
+    }
+    .sec-head { margin-bottom:56px; }
+    .sec-head.center { text-align:center; display:flex; flex-direction:column; align-items:center; }
+    .sec-head.center .sec-p { text-align:center; }
+    .divider {
+      width:100%; height:1px;
+      background:linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
-    .hero-cta {
-      margin-top: 48px;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 5.6s;
+    /* ─── SERVICES ───────────────────────────────────────── */
+    #services { background:var(--bg-2); position:relative; }
+    .srv-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(270px,1fr));
+      gap:18px;
+    }
+    .srv-card {
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:26px;
+      transition:transform var(--transition), border-color var(--transition),
+                 box-shadow var(--transition);
+      position:relative; overflow:hidden;
+    }
+    .srv-card::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(201,168,76,.06), transparent);
+      opacity:0; transition:opacity var(--transition);
+    }
+    .srv-card:hover {
+      transform:translateY(-5px);
+      border-color:rgba(201,168,76,.32);
+      box-shadow:0 22px 44px rgba(0,0,0,.45), 0 0 0 1px rgba(201,168,76,.08);
+    }
+    .srv-card:hover::before { opacity:1; }
+    .srv-ico { font-size:1.9rem; margin-bottom:14px; display:block; }
+    .srv-card h3 {
+      font-family:var(--font-d); font-size:1.05rem; font-weight:600;
+      margin-bottom:8px; color:var(--white);
+    }
+    .srv-card p { font-size:.84rem; color:var(--gray); line-height:1.65; }
+    .srv-more {
+      display:inline-flex; align-items:center; gap:5px;
+      margin-top:14px; font-size:.78rem; font-weight:600; color:var(--gold);
+      opacity:0; transform:translateX(-8px);
+      transition:opacity .3s, transform .3s;
+    }
+    .srv-card:hover .srv-more { opacity:1; transform:translateX(0); }
+
+    /* ─── DIFFERENTIALS ──────────────────────────────────── */
+    .diff-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+    }
+    .diff-card {
+      padding:22px;
+      background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+      transition:transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+    .diff-card:hover {
+      transform:translateY(-3px);
+      border-color:var(--border-h); background:var(--bg-card-h);
+    }
+    .diff-ico {
+      width:46px; height:46px; border-radius:11px;
+      background:linear-gradient(135deg, rgba(201,168,76,.18), rgba(201,168,76,.04));
+      border:1px solid rgba(201,168,76,.28);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.2rem; margin-bottom:14px;
+    }
+    .diff-card h3 { font-size:.92rem; font-weight:600; margin-bottom:5px; }
+    .diff-card p { font-size:.8rem; color:var(--gray); line-height:1.55; }
+
+    /* ─── CASES ──────────────────────────────────────────── */
+    #cases { background:var(--bg-2); }
+    .cases-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+    }
+    .case-card {
+      background:var(--bg-card); border:1px solid var(--border); border-radius:18px;
+      padding:28px; position:relative; overflow:hidden;
+      transition:border-color .4s, box-shadow .4s;
+    }
+    .case-card::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity:0; transition:opacity .4s;
+    }
+    .case-card:hover { border-color:rgba(201,168,76,.3); }
+    .case-card:hover::after { opacity:1; }
+    .case-tag {
+      display:inline-block; padding:3px 11px; border-radius:99px;
+      border:1px solid rgba(201,168,76,.22);
+      background:rgba(201,168,76,.08);
+      font-size:.68rem; font-weight:700; letter-spacing:.06em;
+      text-transform:uppercase; color:var(--gold); margin-bottom:14px;
+    }
+    .case-card h3 {
+      font-family:var(--font-d); font-size:1.18rem; font-weight:700;
+      margin-bottom:10px;
+    }
+    .case-card p { font-size:.84rem; color:var(--gray); line-height:1.7; margin-bottom:18px; }
+    .case-metrics { display:flex; gap:18px; }
+    .case-val {
+      font-family:var(--font-d); font-size:1.45rem; font-weight:700; color:var(--gold);
+    }
+    .case-lbl { font-size:.68rem; color:var(--gray); margin-top:2px; }
+
+    /* ─── AI SECTION ─────────────────────────────────────── */
+    #ai { position:relative; overflow:hidden; }
+    #ai-canvas { position:absolute; inset:0; z-index:0; pointer-events:none; }
+    .ai-wrap { position:relative; z-index:1; }
+    .ai-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;
+      margin-top:56px;
+    }
+    .ai-feats { display:flex; flex-direction:column; gap:16px; }
+    .ai-feat {
+      display:flex; gap:14px; padding:18px;
+      background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+      transition:border-color var(--transition), background var(--transition);
+    }
+    .ai-feat:hover { border-color:var(--border-h); background:var(--bg-card-h); }
+    .ai-ico {
+      min-width:38px; width:38px; height:38px; border-radius:9px;
+      background:linear-gradient(135deg, rgba(201,168,76,.18), transparent);
+      border:1px solid rgba(201,168,76,.28);
+      display:flex; align-items:center; justify-content:center; font-size:1rem;
+    }
+    .ai-feat h4 { font-size:.9rem; font-weight:600; margin-bottom:4px; }
+    .ai-feat p { font-size:.8rem; color:var(--gray); line-height:1.55; }
+    .ai-visual {
+      position:relative; height:420px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    #nn-canvas { width:100%; height:100%; }
+
+    /* ─── STATS ──────────────────────────────────────────── */
+    #stats { background:var(--bg-2); }
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1px; background:var(--border);
+      border:1px solid var(--border); border-radius:18px; overflow:hidden;
+    }
+    .stat-cell {
+      padding:44px 28px; background:var(--bg-2);
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      transition:background var(--transition);
+    }
+    .stat-cell:hover { background:var(--bg-card-h); }
+    .stat-num {
+      font-family:var(--font-d);
+      font-size:clamp(2.4rem,3.5vw,3.2rem);
+      font-weight:700; color:var(--gold); line-height:1; margin-bottom:8px;
+    }
+    .stat-lbl { font-size:.84rem; color:var(--gray); font-weight:500; }
+
+    /* ─── CTA ────────────────────────────────────────────── */
+    #cta { position:relative; overflow:hidden; text-align:center; }
+    .cta-orb {
+      position:absolute; width:640px; height:640px; border-radius:50%;
+      background:radial-gradient(circle, rgba(201,168,76,.07) 0%, transparent 70%);
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+    .cta-body {
+      position:relative; z-index:1;
+      max-width:660px; margin:0 auto;
+    }
+    .cta-body .sec-badge { margin:0 auto 22px; }
+    .cta-h2 {
+      font-family:var(--font-d);
+      font-size:clamp(2rem,4vw,3rem);
+      font-weight:700; letter-spacing:-.03em; line-height:1.13;
+      margin-bottom:18px;
+    }
+    .cta-p {
+      font-size:1.02rem; color:var(--gray); line-height:1.75; margin-bottom:36px;
+    }
+    .btn-pulse {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:16px 34px; border-radius:12px;
+      font-weight:700; font-size:.95rem;
+      background:linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
+      color:#0A0A0A;
+      animation:pulse-glow 3s ease-in-out infinite;
+      position:relative;
+    }
+    @keyframes pulse-glow {
+      0%,100%{ box-shadow:0 0 24px rgba(201,168,76,.3), 0 0 60px rgba(201,168,76,.08); }
+      50%{ box-shadow:0 0 44px rgba(201,168,76,.65), 0 0 90px rgba(201,168,76,.2); }
     }
 
-    .btn-gold {
-      background: var(--gold);
-      color: var(--black);
-      padding: 14px 36px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
-      display: inline-block;
-    }
-
-    .btn-gold:hover {
-      background: var(--gold-light);
-      transform: translateY(-1px);
-    }
-
-    .btn-ghost {
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 2px;
-      transition: color 0.3s, border-color 0.3s;
-    }
-
-    .btn-ghost:hover {
-      color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    /* SECTION BASE */
-    section {
-      padding: 120px 60px;
-      position: relative;
-    }
-
-    .section-tag {
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 4vw, 58px);
-      font-weight: 300;
-      line-height: 1.1;
-      max-width: 600px;
-    }
-
-    .section-title em { font-style: italic; color: var(--gold); }
-
-    /* SOBRE */
-    .sobre {
-      background: var(--dark);
-      border-top: 1px solid var(--border);
-    }
-
-    .sobre-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr 280px;
-      gap: 56px;
-      margin-top: 64px;
-      align-items: start;
-    }
-
-    .autor-foto img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      object-position: top;
-      border: 1px solid var(--border);
-      filter: grayscale(15%);
-      display: block;
-    }
-
-    .autor-foto .autor-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      color: var(--gold);
-      margin-top: 14px;
-      letter-spacing: 0.06em;
-    }
-
-    .autor-foto .autor-role {
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 5px;
-    }
-
-    .sobre-text p {
-      font-size: 17px;
-      line-height: 1.9;
-      color: #b0ada6;
-      margin-bottom: 28px;
-    }
-
-    .sobre-text p strong {
-      color: var(--white);
-      font-weight: 500;
-    }
-
-    .sobre-nums {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-
-    .num-card {
-      background: var(--card);
-      padding: 40px 24px;
-      border: 1px solid var(--border);
-    }
-
-    .num-card .number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 48px;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-    }
-
-    .num-card .label {
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-top: 8px;
-      text-transform: uppercase;
-    }
-
-    /* COMO FUNCIONA */
-    .como {
-      border-top: 1px solid var(--border);
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      margin-top: 64px;
-    }
-
-    .step {
-      background: var(--card);
-      padding: 48px 32px;
-      border: 1px solid var(--border);
-      position: relative;
-      transition: border-color 0.3s;
-    }
-
-    .step:hover { border-color: var(--gold); }
-
-    .step-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 64px;
-      font-weight: 300;
-      color: var(--border);
-      line-height: 1;
-      margin-bottom: 24px;
-    }
-
-    .step h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-
-    .step p {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    /* SERVIÇOS */
-    .servicos {
-      background: var(--dark);
-      border-top: 1px solid var(--border);
-    }
-
-    .servicos-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 64px;
-    }
-
-    .servico-card {
-      background: var(--card);
-      padding: 48px 36px;
-      border: 1px solid var(--border);
-      transition: border-color 0.3s, background 0.3s;
-    }
-
-    .servico-card:hover {
-      border-color: var(--gold);
-      background: #1a1a1a;
-    }
-
-    .servico-icon {
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      margin-bottom: 32px;
-    }
-
-    .servico-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 400;
-      margin-bottom: 16px;
-    }
-
-    .servico-card p {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.9;
-    }
-
-    /* CTA FINAL */
-    .cta-section {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 140px 60px;
-    }
-
-    .cta-section .section-title {
-      margin: 0 auto 16px;
-      text-align: center;
-    }
-
-    .cta-section p {
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0 auto 48px;
-      max-width: 420px;
-      line-height: 1.9;
-    }
-
-    /* FOOTER */
+    /* ─── FOOTER ─────────────────────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background:var(--bg-2);
+      border-top:1px solid var(--border);
+      padding:56px 32px 28px;
     }
-
-    footer p {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
+    .foot-wrap { max-width:1260px; margin:0 auto; }
+    .foot-top {
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:44px;
+      margin-bottom:44px;
     }
-
-    footer .logo { font-size: 16px; }
-
-    /* ── INTRO: LOGO REVEAL ─────────────────────────── */
-    #intro {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: introOut 1s ease forwards 4.8s;
+    .foot-brand p {
+      font-size:.845rem; color:var(--gray); line-height:1.7; margin-top:10px; max-width:270px;
     }
-
-    @keyframes introOut {
-      to { opacity: 0; visibility: hidden; }
+    .foot-socials { display:flex; gap:10px; margin-top:18px; }
+    .foot-soc {
+      width:34px; height:34px; border-radius:8px;
+      border:1px solid var(--border); background:var(--bg-card);
+      display:flex; align-items:center; justify-content:center; font-size:.85rem;
+      transition:border-color .2s, transform .2s, background .2s;
     }
-
-    .intro-logo-img {
-      width: min(400px, 78vw);
-      mix-blend-mode: screen; /* fundo escuro da imagem some, só ouro e branco aparecem */
-      opacity: 0;
-      animation: logoReveal 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) forwards 0.5s;
+    .foot-soc:hover { border-color:var(--border-h); background:var(--bg-card-h); transform:translateY(-2px); }
+    .foot-col h4 {
+      font-size:.72rem; font-weight:700; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--gray); margin-bottom:14px;
     }
-
-    @keyframes logoReveal {
-      0%   { opacity: 0; transform: scale(0.86) translateY(12px); filter: brightness(0.4); }
-      60%  { opacity: 1; filter: brightness(1.15); }
-      100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1); }
+    .foot-col ul { list-style:none; display:flex; flex-direction:column; gap:9px; }
+    .foot-col ul a { font-size:.845rem; color:var(--gray); transition:color .2s; }
+    .foot-col ul a:hover { color:var(--white); }
+    .foot-bottom {
+      padding-top:22px; border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
     }
+    .foot-bottom p, .foot-bottom a { font-size:.78rem; color:var(--gray); }
+    .foot-bottom a:hover { color:var(--white); }
+    .foot-bottom-links { display:flex; gap:18px; }
 
-    /* ── HERO FADEUP — atrasado para entrar após intro ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    .fu { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+    .fi { opacity:0; transition:opacity .8s ease; }
+    .fu.vis, .fi.vis { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.08s;} .d2{transition-delay:.16s;}
+    .d3{transition-delay:.24s;} .d4{transition-delay:.32s;}
+    .d5{transition-delay:.40s;} .d6{transition-delay:.48s;}
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media(max-width:1100px){
+      .diff-grid{ grid-template-columns:repeat(2,1fr); }
+      .cases-grid{ grid-template-columns:repeat(2,1fr); }
+      .foot-top{ grid-template-columns:1fr 1fr; gap:32px; }
+      .ai-grid{ grid-template-columns:1fr; gap:40px; }
+      .ai-visual{ height:300px; }
     }
-
-    /* MOBILE */
-    @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
-      nav a { display: none; }
-      .hero { padding: 0 24px 60px; }
-      section { padding: 80px 24px; }
-      .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
-      .steps { grid-template-columns: 1fr 1fr; }
-      .servicos-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 16px; text-align: center; }
+    @media(max-width:768px){
+      section{ padding:68px 20px; }
+      .nav-links{ display:none; }
+      .burger{ display:flex; }
+      .hero-numbers{ gap:22px; }
+      .srv-grid{ grid-template-columns:1fr; }
+      .diff-grid{ grid-template-columns:repeat(2,1fr); gap:14px; }
+      .cases-grid{ grid-template-columns:1fr; }
+      .stats-grid{ grid-template-columns:repeat(2,1fr); }
+      .foot-top{ grid-template-columns:1fr; gap:28px; }
+      .foot-bottom{ flex-direction:column; text-align:center; }
+      .hero-btns{ flex-direction:column; align-items:flex-start; }
+    }
+    @media(max-width:480px){
+      .diff-grid{ grid-template-columns:1fr; }
+      .stats-grid{ grid-template-columns:1fr; }
+      #nav{ padding:0 20px; }
     }
   </style>
 </head>
 <body>
 
-<!-- INTRO: LOGO REVEAL -->
-<div id="intro">
-  <img src="logo.jpg" alt="Jordão & Co" class="intro-logo-img">
+<!-- ══ CURSOR ════════════════════════════════════════════ -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- ══ LOADER ════════════════════════════════════════════ -->
+<div id="loader">
+  <div class="ld-logo">Jordão<em>&</em>Co</div>
+  <div class="ld-bar"><div class="ld-fill" id="ld-fill"></div></div>
+  <div class="ld-tag" id="ld-tag">Iniciando sistemas...</div>
 </div>
 
-<!-- NAV -->
-<nav>
-  <a href="#" style="display:flex;align-items:center;">
-    <img src="logo.jpg" alt="Jordão & Co"
-         style="height:44px; mix-blend-mode:screen; opacity:0.92;">
-  </a>
-  <a href="#sobre">Sobre</a>
-  <a href="#servicos">Serviços</a>
-  <a href="https://wa.me/5511921578721" target="_blank">Contato</a>
+<!-- ══ MOBILE MENU ════════════════════════════════════════ -->
+<div id="mob">
+  <button id="mob-close">✕</button>
+  <a href="#services"      onclick="closeMob()">Serviços</a>
+  <a href="#differentials" onclick="closeMob()">Diferenciais</a>
+  <a href="#cases"         onclick="closeMob()">Cases</a>
+  <a href="#ai"            onclick="closeMob()">IA</a>
+  <a href="#stats"         onclick="closeMob()">Números</a>
+  <a href="#cta"           onclick="closeMob()">Contato</a>
+</div>
+
+<!-- ══ NAV ════════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="#" class="nav-logo">Jordão<em>&</em>Co</a>
+    <ul class="nav-links">
+      <li><a href="#services">Serviços</a></li>
+      <li><a href="#differentials">Diferenciais</a></li>
+      <li><a href="#cases">Cases</a></li>
+      <li><a href="#ai">IA</a></li>
+      <li><a href="#stats">Números</a></li>
+      <li><a href="https://wa.me/5511921578721" target="_blank" class="nav-btn">Solicitar Orçamento</a></li>
+    </ul>
+    <div class="burger" onclick="openMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-line"></div>
-  <div style="position:relative;">
-    <p class="hero-tag">Tecnologia · Negócios · Santo André, SP</p>
-    <h1>Tecnologia que <em>resolve.</em><br>Negócios que fecham.</h1>
-    <p class="hero-sub">Desenvolvemos sites, sistemas, apps e IAs para empresas que crescem. E quando é hora de negociar um ativo, cuidamos de tudo — do primeiro contato ao fechamento.</p>
-    <div class="hero-cta">
-      <a href="https://wa.me/5511921578721" class="btn-gold" target="_blank">Falar com a equipe</a>
-      <a href="#servicos" class="btn-ghost">Ver serviços</a>
+<!-- ══ HERO ═══════════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-body">
+    <div class="hero-badge fu"><div class="badge-dot"></div> Inovação em Tecnologia & Inteligência Artificial</div>
+    <h1 class="hero-h1 fu d1">
+      Transformamos Ideias em<br>
+      <span class="grad">Sistemas Inteligentes</span><br>
+      que Geram Resultados.
+    </h1>
+    <p class="hero-sub fu d2">
+      Criamos aplicativos, sistemas web, plataformas empresariais, automações, Inteligência Artificial e agentes inteligentes para empresas que desejam crescer e escalar.
+    </p>
+    <div class="hero-btns fu d3">
+      <a href="https://wa.me/5511921578721" target="_blank" class="btn-g">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Solicitar Orçamento
+      </a>
+      <a href="#services" class="btn-o">
+        Conhecer Soluções
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-numbers fu d4">
+      <div class="hn-item">
+        <span class="hn-num">+100</span>
+        <span class="hn-lbl">Projetos Entregues</span>
+      </div>
+      <div class="hn-item">
+        <span class="hn-num">+50</span>
+        <span class="hn-lbl">Empresas Atendidas</span>
+      </div>
+      <div class="hn-item">
+        <span class="hn-num">98%</span>
+        <span class="hn-lbl">Satisfação dos Clientes</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ══ TECH TICKER ════════════════════════════════════════ -->
+<div id="ticker">
+  <div class="ticker-track" id="ticker-track">
+    <!-- duplicated for infinite loop -->
+    <div class="t-chip">⚡ React</div>
+    <div class="t-chip">🔷 Node.js</div>
+    <div class="t-chip">🐍 Python</div>
+    <div class="t-chip">☁️ AWS</div>
+    <div class="t-chip">🤖 OpenAI API</div>
+    <div class="t-chip">🔵 PostgreSQL</div>
+    <div class="t-chip">📱 React Native</div>
+    <div class="t-chip">🚀 Next.js</div>
+    <div class="t-chip">🔧 TypeScript</div>
+    <div class="t-chip">⚙️ Docker</div>
+    <div class="t-chip">🌐 GraphQL</div>
+    <div class="t-chip">🧠 LangChain</div>
+    <div class="t-chip">🔥 Firebase</div>
+    <div class="t-chip">📊 Supabase</div>
+    <div class="t-chip">⚡ React</div>
+    <div class="t-chip">🔷 Node.js</div>
+    <div class="t-chip">🐍 Python</div>
+    <div class="t-chip">☁️ AWS</div>
+    <div class="t-chip">🤖 OpenAI API</div>
+    <div class="t-chip">🔵 PostgreSQL</div>
+    <div class="t-chip">📱 React Native</div>
+    <div class="t-chip">🚀 Next.js</div>
+    <div class="t-chip">🔧 TypeScript</div>
+    <div class="t-chip">⚙️ Docker</div>
+    <div class="t-chip">🌐 GraphQL</div>
+    <div class="t-chip">🧠 LangChain</div>
+    <div class="t-chip">🔥 Firebase</div>
+    <div class="t-chip">📊 Supabase</div>
+  </div>
+</div>
+
+<!-- ══ SERVICES ═══════════════════════════════════════════ -->
+<section id="services">
+  <div class="divider" style="margin-bottom:0;transform:translateY(-96px);"></div>
+  <div class="wrap">
+    <div class="sec-head fu">
+      <div class="sec-badge">● Soluções Completas</div>
+      <h2 class="sec-h2">Tudo que sua empresa<br>precisa para escalar</h2>
+      <p class="sec-p">Do aplicativo ao sistema enterprise, do site à automação com IA — desenvolvemos soluções para cada etapa do crescimento.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card fu d1">
+        <span class="srv-ico">📱</span>
+        <h3>Desenvolvimento de Aplicativos</h3>
+        <p>Aplicativos para iOS e Android desenvolvidos com tecnologia web (HTML, CSS e JavaScript). Experiência nativa com custo reduzido, instalável e funcional em qualquer dispositivo.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d2">
+        <span class="srv-ico">💻</span>
+        <h3>Sistemas Web Personalizados</h3>
+        <p>Plataformas e sistemas web desenvolvidos sob medida para o seu processo de negócio. Escaláveis, seguros e de alta performance.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d3">
+        <span class="srv-ico">🌐</span>
+        <h3>Criação de Sites Profissionais</h3>
+        <p>Sites institucionais, landing pages e portais com design premium, SEO avançado e performance otimizada para conversão.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d4">
+        <span class="srv-ico">🤖</span>
+        <h3>Inteligência Artificial</h3>
+        <p>Integração de IA nos processos de negócio. Modelos de linguagem, visão computacional, análise preditiva e automação cognitiva.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d5">
+        <span class="srv-ico">🧠</span>
+        <h3>Agentes de IA para Vendas</h3>
+        <p>Agentes autônomos que atendem, qualificam e vendem 24/7. Integrados ao WhatsApp, Instagram, site e sistemas CRM.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d1">
+        <span class="srv-ico">⚖️</span>
+        <h3>Sistemas para Advocacia</h3>
+        <p>Plataformas jurídicas completas: gestão de processos, prazos automáticos, documentos e integração com PJe e tribunais digitais.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d2">
+        <span class="srv-ico">📄</span>
+        <h3>Sistemas para Licitações</h3>
+        <p>Plataformas para licitações públicas: monitoramento automático, análise de editais com IA e gestão completa de propostas.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d3">
+        <span class="srv-ico">🏢</span>
+        <h3>ERP e Gestão Empresarial</h3>
+        <p>Sistemas ERP customizados que integram finanças, estoque, RH, vendas e logística em uma única plataforma centralizada.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d4">
+        <span class="srv-ico">📊</span>
+        <h3>Dashboards e Business Intelligence</h3>
+        <p>Painéis analíticos em tempo real com KPIs, relatórios dinâmicos e insights acionáveis para decisões estratégicas de negócio.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
+      <div class="srv-card fu d5">
+        <span class="srv-ico">⚡</span>
+        <h3>Automação de Processos</h3>
+        <p>Elimine tarefas manuais e reduza erros com automações inteligentes integradas ao seu stack tecnológico atual em produção.</p>
+        <div class="srv-more">Saiba mais →</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- SOBRE -->
-<section class="sobre" id="sobre">
-  <p class="section-tag">Sobre nós</p>
-  <h2 class="section-title">Tecnologia certa. <em>Resultado real.</em></h2>
-  <div class="sobre-grid">
-
-    <!-- FOTO — substitua foto-alex.jpg pela sua foto -->
-    <div class="autor-foto">
-      <img src="foto-alex.jpg" alt="Alex Jordão Ferreira">
-      <p class="autor-name">Alex Jordão Ferreira</p>
-      <p class="autor-role">Fundador · Jordão & Co</p>
+<!-- ══ DIFFERENTIALS ══════════════════════════════════════ -->
+<section id="differentials">
+  <div class="wrap">
+    <div class="sec-head center fu">
+      <div class="sec-badge">● Por que a Jordão & Co</div>
+      <h2 class="sec-h2">Diferenciais que fazem<br>a diferença real</h2>
+      <p class="sec-p">Cada projeto entregue reflete nosso compromisso com excelência técnica, inovação e resultados mensuráveis para o negócio.</p>
     </div>
-
-    <!-- TEXTO -->
-    <div class="sobre-text">
-      <p>A <strong>Jordão & Co</strong> nasceu da convicção de que tecnologia só tem valor quando resolve um problema real. Não desenvolvemos sistemas por desenvolver — entendemos o negócio, mapeamos o desafio e construímos a solução que faz sentido.</p>
-      <p>Atuamos no desenvolvimento de <strong>sites, sistemas, CRMs, aplicativos e soluções de inteligência artificial</strong> para empresas que precisam crescer com tecnologia. Ao mesmo tempo, seguimos intermediando negócios com a discrição e eficiência que já são nossa marca.</p>
-      <p>Você não precisa entender de tecnologia. <strong>Precisa só dos resultados.</strong></p>
-    </div>
-
-    <!-- NÚMEROS -->
-    <div class="sobre-nums">
-      <div class="num-card">
-        <div class="number">100%</div>
-        <div class="label">Processo gerenciado</div>
+    <div class="diff-grid">
+      <div class="diff-card fu d1">
+        <div class="diff-ico">🎯</div>
+        <h3>Projetos Sob Medida</h3>
+        <p>Cada solução é desenvolvida especificamente para o seu negócio — sem templates genéricos ou limitações de plataforma.</p>
       </div>
-      <div class="num-card">
-        <div class="number">0</div>
-        <div class="label">Surpresas no processo</div>
+      <div class="diff-card fu d2">
+        <div class="diff-ico">🔗</div>
+        <h3>Integrações Avançadas</h3>
+        <p>Conectamos sua solução a qualquer API, ERP, CRM ou sistema legado existente, garantindo continuidade operacional.</p>
       </div>
-      <div class="num-card">
-        <div class="number">SP</div>
-        <div class="label">Base em Santo André</div>
+      <div class="diff-card fu d3">
+        <div class="diff-ico">🧠</div>
+        <h3>IA Aplicada ao Negócio</h3>
+        <p>Inteligência artificial que resolve problemas reais, gera retorno mensurável e cria vantagem competitiva sustentável.</p>
       </div>
-      <div class="num-card">
-        <div class="number">CNPJ</div>
-        <div class="label">Empresa registrada</div>
+      <div class="diff-card fu d4">
+        <div class="diff-ico">🔒</div>
+        <h3>Segurança de Dados</h3>
+        <p>Arquitetura segura com criptografia, LGPD compliance e proteção de dados de ponta a ponta em toda a plataforma.</p>
       </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- COMO FUNCIONA -->
-<section class="como" id="como">
-  <p class="section-tag">Processo</p>
-  <h2 class="section-title">Do briefing <em>ao resultado.</em></h2>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h3>Diagnóstico</h3>
-      <p>Mapeamos seu negócio, seus processos e o que a tecnologia pode resolver de verdade. Sem tecniquês, sem enrolação.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h3>Estratégia</h3>
-      <p>Definimos a solução ideal, escopo e investimento com total clareza. Você decide com informação real na mão.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h3>Execução</h3>
-      <p>Desenvolvemos com qualidade, agilidade e comunicação constante. Sem surpresas no meio do caminho.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">04</div>
-      <h3>Entrega</h3>
-      <p>Implementamos, treinamos e acompanhamos. Você fica com o que foi prometido — funcionando.</p>
+      <div class="diff-card fu d1">
+        <div class="diff-ico">📈</div>
+        <h3>Escalabilidade</h3>
+        <p>Sistemas que crescem com o seu negócio, suportando milhares de usuários simultâneos sem reconstrução do zero.</p>
+      </div>
+      <div class="diff-card fu d2">
+        <div class="diff-ico">🛟</div>
+        <h3>Suporte Especializado</h3>
+        <p>Time técnico dedicado com SLA garantido, monitoramento proativo e suporte contínuo pós-entrega de cada projeto.</p>
+      </div>
+      <div class="diff-card fu d3">
+        <div class="diff-ico">⚡</div>
+        <h3>Alta Performance</h3>
+        <p>Sistemas rápidos, otimizados para múltiplos dispositivos e com disponibilidade de 99.9% de uptime garantido por contrato.</p>
+      </div>
+      <div class="diff-card fu d4">
+        <div class="diff-ico">🚀</div>
+        <h3>Tecnologia de Ponta</h3>
+        <p>Utilizamos as mais modernas stacks, frameworks e modelos de IA disponíveis no mercado global de tecnologia.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- SERVIÇOS -->
-<section class="servicos" id="servicos">
-  <p class="section-tag">Serviços</p>
-  <h2 class="section-title">O que a <em>Jordão & Co</em> entrega.</h2>
-  <div class="servicos-grid">
-    <div class="servico-card">
-      <div class="servico-icon"></div>
-      <h3>Criação de Sites</h3>
-      <p>Sites institucionais, landing pages e lojas virtuais. Design que converte, código que performa e SEO que aparece nos resultados.</p>
+<!-- ══ CASES ══════════════════════════════════════════════ -->
+<section id="cases">
+  <div class="divider" style="margin-bottom:0;transform:translateY(-96px);"></div>
+  <div class="wrap">
+    <div class="sec-head fu">
+      <div class="sec-badge">● Cases de Sucesso</div>
+      <h2 class="sec-h2">Soluções que transformam<br>negócios reais</h2>
+      <p class="sec-p">Projetos desenvolvidos com excelência técnica e foco em resultados mensuráveis para nossos clientes.</p>
     </div>
-    <div class="servico-card">
-      <div class="servico-icon"></div>
-      <h3>CRM</h3>
-      <p>Sistemas de gestão do relacionamento com o cliente. Organize seu funil, automatize o follow-up e venda com consistência.</p>
-    </div>
-    <div class="servico-card">
-      <div class="servico-icon"></div>
-      <h3>Sistemas Web</h3>
-      <p>Plataformas, dashboards e automações sob medida. Resolvemos o que ferramentas genéricas não conseguem.</p>
-    </div>
-    <div class="servico-card">
-      <div class="servico-icon"></div>
-      <h3>Aplicativos</h3>
-      <p>Apps mobile e web para empresas. Da ideia ao lançamento — construímos o produto certo, na velocidade certa.</p>
-    </div>
-    <div class="servico-card">
-      <div class="servico-icon"></div>
-      <h3>Inteligência Artificial</h3>
-      <p>Agentes de IA, chatbots e automações inteligentes. Tecnologia que trabalha pelo seu negócio 24 horas por dia.</p>
-    </div>
-    <div class="servico-card">
-      <div class="servico-icon"></div>
-      <h3>Intermediação de Negócios</h3>
-      <p>Conectamos vendedores e compradores com segurança e discrição. Do anúncio ao contrato, cuidamos de tudo.</p>
+    <div class="cases-grid">
+      <div class="case-card fu d1">
+        <div class="case-tag">Setor Público</div>
+        <h3>Plataforma de Licitações Inteligente</h3>
+        <p>Sistema completo para monitoramento, análise e participação em licitações públicas com IA para análise de editais e automação de propostas.</p>
+        <div class="case-metrics">
+          <div><div class="case-val">3×</div><div class="case-lbl">Mais licitações ganhas</div></div>
+          <div><div class="case-val">80%</div><div class="case-lbl">Menos tempo operacional</div></div>
+        </div>
+      </div>
+      <div class="case-card fu d2">
+        <div class="case-tag">Jurídico</div>
+        <h3>Plataforma Jurídica Digital</h3>
+        <p>Sistema completo para escritórios de advocacia com gestão de processos, prazos automáticos, documentos e integração com tribunais digitais.</p>
+        <div class="case-metrics">
+          <div><div class="case-val">+200</div><div class="case-lbl">Processos gerenciados</div></div>
+          <div><div class="case-val">0</div><div class="case-lbl">Prazos perdidos</div></div>
+        </div>
+      </div>
+      <div class="case-card fu d3">
+        <div class="case-tag">Atendimento IA</div>
+        <h3>Agente de IA para Vendas</h3>
+        <p>Agente autônomo no WhatsApp que qualifica leads, apresenta produtos, tira dúvidas e fecha vendas automaticamente 24 horas por dia.</p>
+        <div class="case-metrics">
+          <div><div class="case-val">24/7</div><div class="case-lbl">Atendimento ativo</div></div>
+          <div><div class="case-val">+40%</div><div class="case-lbl">Aumento em vendas</div></div>
+        </div>
+      </div>
+      <div class="case-card fu d4">
+        <div class="case-tag">Gestão</div>
+        <h3>ERP Empresarial Customizado</h3>
+        <p>Sistema de gestão integrado para empresa multi-filial — financeiro, estoque, RH, vendas e logística em uma única plataforma centralizada.</p>
+        <div class="case-metrics">
+          <div><div class="case-val">5</div><div class="case-lbl">Filiais integradas</div></div>
+          <div><div class="case-val">60%</div><div class="case-lbl">Redução de custos</div></div>
+        </div>
+      </div>
+      <div class="case-card fu d5">
+        <div class="case-tag">Analytics</div>
+        <h3>Dashboard de Business Intelligence</h3>
+        <p>Plataforma de BI com KPIs em tempo real, análise preditiva e relatórios automatizados integrados às principais fontes de dados.</p>
+        <div class="case-metrics">
+          <div><div class="case-val">Real-time</div><div class="case-lbl">Dados ao vivo</div></div>
+          <div><div class="case-val">+30%</div><div class="case-lbl">Decisões mais rápidas</div></div>
+        </div>
+      </div>
+      <div class="case-card fu d6">
+        <div class="case-tag">Mobile</div>
+        <h3>Aplicativo Empresarial Mobile</h3>
+        <p>App para iOS e Android desenvolvido em HTML, CSS e JavaScript — instalável como aplicativo nativo, com gestão de tarefas, relatórios offline, geolocalização e sincronização em tempo real com ERP.</p>
+        <div class="case-metrics">
+          <div><div class="case-val">+150</div><div class="case-lbl">Usuários ativos</div></div>
+          <div><div class="case-val">95%</div><div class="case-lbl">Taxa de adoção</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL -->
-<section class="cta-section">
-  <p class="section-tag">Contato</p>
-  <h2 class="section-title">Pronto para <em>começar?</em></h2>
-  <p>Nos conte o seu desafio. Sem compromisso, sem burocracia. A gente avalia e te apresenta o que é possível fazer.</p>
-  <a href="https://wa.me/5511921578721" class="btn-gold" target="_blank">Falar pelo WhatsApp</a>
+<!-- ══ AI SECTION ═════════════════════════════════════════ -->
+<section id="ai">
+  <canvas id="ai-canvas"></canvas>
+  <div class="wrap ai-wrap">
+    <div class="sec-head center fu">
+      <div class="sec-badge">● Inteligência Artificial</div>
+      <h2 class="sec-h2">IA que trabalha pelo<br>seu negócio</h2>
+      <p class="sec-p">Implementamos soluções de Inteligência Artificial que automatizam decisões, escalam o atendimento e geram insights estratégicos em tempo real.</p>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-feats">
+        <div class="ai-feat fu d1">
+          <div class="ai-ico">💬</div>
+          <div>
+            <h4>IA para Atendimento e Vendas</h4>
+            <p>Agentes que conversam como humanos, qualificam leads, respondem dúvidas e convertem clientes no WhatsApp, Instagram e site — 24 horas por dia.</p>
+          </div>
+        </div>
+        <div class="ai-feat fu d2">
+          <div class="ai-ico">⚙️</div>
+          <div>
+            <h4>IA para Automação de Processos</h4>
+            <p>Automatize fluxos complexos, elimine tarefas manuais e libere sua equipe para atividades estratégicas com IA integrada aos seus sistemas.</p>
+          </div>
+        </div>
+        <div class="ai-feat fu d3">
+          <div class="ai-ico">📊</div>
+          <div>
+            <h4>IA para Análise de Dados</h4>
+            <p>Processamento inteligente de grandes volumes de dados, identificando padrões e oportunidades de negócio que o olho humano não vê.</p>
+          </div>
+        </div>
+        <div class="ai-feat fu d4">
+          <div class="ai-ico">🤖</div>
+          <div>
+            <h4>Agentes Autônomos</h4>
+            <p>Agentes de IA que tomam decisões, executam tarefas complexas, integram ferramentas e operam de forma totalmente autônoma no seu negócio.</p>
+          </div>
+        </div>
+        <div class="ai-feat fu d5">
+          <div class="ai-ico">💡</div>
+          <div>
+            <h4>IA para Estratégia de Negócios</h4>
+            <p>Modelos preditivos e análise de cenários que apoiam decisões estratégicas com base em dados reais do seu mercado e empresa.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ai-visual fi d3">
+        <canvas id="nn-canvas"></canvas>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══ STATS ═══════════════════════════════════════════════ -->
+<section id="stats">
+  <div class="divider" style="margin-bottom:0;transform:translateY(-96px);"></div>
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-cell fu d1">
+        <div class="stat-num" data-target="100" data-pre="+" data-suf="">0</div>
+        <div class="stat-lbl">Projetos Entregues</div>
+      </div>
+      <div class="stat-cell fu d2">
+        <div class="stat-num" data-target="50" data-pre="+" data-suf="">0</div>
+        <div class="stat-lbl">Empresas Atendidas</div>
+      </div>
+      <div class="stat-cell fu d3">
+        <div class="stat-num" data-target="98" data-pre="" data-suf="%">0</div>
+        <div class="stat-lbl">Satisfação dos Clientes</div>
+      </div>
+      <div class="stat-cell fu d4">
+        <div class="stat-num" data-target="24" data-pre="" data-suf="/7">0</div>
+        <div class="stat-lbl">Soluções Inteligentes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════════ -->
+<section id="cta">
+  <div class="cta-orb"></div>
+  <div class="wrap">
+    <div class="cta-body fu">
+      <div class="sec-badge">● Próximo Passo</div>
+      <h2 class="cta-h2">Sua empresa está pronta<br>para o próximo nível?</h2>
+      <p class="cta-p">Automatize processos, reduza custos e aumente resultados com tecnologia desenvolvida especificamente para o seu negócio.</p>
+      <a href="https://wa.me/5511921578721" target="_blank" class="btn-pulse">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Solicitar Diagnóstico Gratuito
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════ -->
 <footer>
-  <div class="logo">Jordão <span>& Co</span></div>
-  <p>Santo André, SP · CNPJ 66.684.965/0001-59</p>
-  <p>© 2026 Jordão & Co Ltda. Todos os direitos reservados.</p>
+  <div class="foot-wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="nav-logo" style="font-size:1.4rem;">Jordão<em style="font-style:normal;color:var(--gold);">&</em>Co</div>
+        <p>Transformamos ideias em sistemas inteligentes que geram resultados. Inovação, tecnologia e IA para empresas que desejam crescer e escalar.</p>
+        <div class="foot-socials">
+          <a href="https://instagram.com/jordaoeco.negocios" target="_blank" class="foot-soc" title="Instagram">📷</a>
+          <a href="#" class="foot-soc" title="LinkedIn">💼</a>
+          <a href="https://wa.me/5511921578721" target="_blank" class="foot-soc" title="WhatsApp">💬</a>
+          <a href="#" class="foot-soc" title="YouTube">▶️</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Soluções</h4>
+        <ul>
+          <li><a href="#services">Aplicativos Mobile</a></li>
+          <li><a href="#services">Sistemas Web</a></li>
+          <li><a href="#services">Inteligência Artificial</a></li>
+          <li><a href="#services">Agentes de IA</a></li>
+          <li><a href="#services">Automação</a></li>
+          <li><a href="#services">ERP e Gestão</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Mercados</h4>
+        <ul>
+          <li><a href="#cases">Escritórios de Advocacia</a></li>
+          <li><a href="#cases">Licitações Públicas</a></li>
+          <li><a href="#cases">E-commerce</a></li>
+          <li><a href="#cases">Empresas de Médio Porte</a></li>
+          <li><a href="#cases">Startups</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5511921578721" target="_blank">WhatsApp</a></li>
+          <li><a href="mailto:jordaoecoltda@gmail.com">jordaoecoltda@gmail.com</a></li>
+          <li><a href="#cta">Diagnóstico Gratuito</a></li>
+          <li><a href="#cta">Solicitar Orçamento</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2025 Jordão & Co. Todos os direitos reservados. CNPJ: 66.684.965/0001-59</p>
+      <div class="foot-bottom-links">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
-
+<!-- ══ JAVASCRIPT ═════════════════════════════════════════ -->
 <script>
-  setTimeout(() => {
-    const el = document.getElementById('intro');
-    if (el) el.remove();
-  }, 6300);
+/* ── LOADER ─────────────────────────────────────────────── */
+(function(){
+  const fill = document.getElementById('ld-fill');
+  const loader = document.getElementById('loader');
+  const tag = document.getElementById('ld-tag');
+  const msgs = ['Iniciando sistemas...','Carregando IA...','Configurando ambiente...','Pronto!'];
+  let p = 0, mi = 0;
+  const iv = setInterval(()=>{
+    p += Math.random()*12 + 4;
+    if(p>100) p=100;
+    fill.style.width = p+'%';
+    const ni = Math.floor(p / 34);
+    if(ni !== mi && msgs[ni]){ mi=ni; tag.textContent=msgs[ni]; }
+    if(p===100){
+      clearInterval(iv);
+      setTimeout(()=>{
+        loader.classList.add('out');
+        initReveal();
+      }, 400);
+    }
+  }, 70);
+})();
+
+/* ── CURSOR ─────────────────────────────────────────────── */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let fx=0,fy=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  fx=e.clientX; fy=e.clientY;
+  cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
+});
+(function animRing(){
+  rx += (fx-rx)*.11; ry += (fy-ry)*.11;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.srv-card,.case-card,.diff-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cur-big'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-big'));
+});
+
+/* ── NAVBAR ─────────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+},{ passive:true });
+
+/* ── MOBILE NAV ─────────────────────────────────────────── */
+function openMob(){ document.getElementById('mob').classList.add('open'); }
+function closeMob(){ document.getElementById('mob').classList.remove('open'); }
+document.getElementById('mob-close').addEventListener('click', closeMob);
+
+/* ── HERO CANVAS ─────────────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize(){
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  const GOLD = 'rgba(201,168,76,';
+  const N = 90;
+  const pts = Array.from({length:N},()=>({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    vx:(Math.random()-.5)*.45,
+    vy:(Math.random()-.5)*.45,
+    r: Math.random()*1.8+.4,
+    a: Math.random()*.6+.15,
+    ph: Math.random()*Math.PI*2,
+    sp: .018+Math.random()*.018
+  }));
+
+  function frame(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.ph+=p.sp;
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      const a = p.a*(0.65+0.35*Math.sin(p.ph));
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = GOLD+a+')';
+      ctx.fill();
+    });
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<140){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=GOLD+(1-d/140)*.22+')';
+          ctx.lineWidth=.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ── AI BG CANVAS ────────────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('ai-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize(){
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  const GOLD = 'rgba(201,168,76,';
+  const pts = Array.from({length:50},()=>({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    vx:(Math.random()-.5)*.25,
+    vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.4+.3,
+    a:Math.random()*.3+.08,
+    ph:Math.random()*Math.PI*2,
+    sp:.015+Math.random()*.015
+  }));
+
+  function frame(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.ph+=p.sp;
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=GOLD+(p.a*(0.7+0.3*Math.sin(p.ph)))+')';
+      ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=GOLD+(1-d/120)*.15+')';
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ── NEURAL NETWORK ──────────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('nn-canvas');
+  const parent = canvas.parentElement;
+  const ctx = canvas.getContext('2d');
+
+  function resize(){
+    canvas.width = parent.offsetWidth;
+    canvas.height = parent.offsetHeight;
+    buildNet();
+  }
+
+  const GOLD = 'rgba(201,168,76,';
+  const LAYERS = [3,5,5,4,2];
+  let nodes = [];
+
+  function buildNet(){
+    nodes = [];
+    const pad = 44;
+    const lspc = (canvas.width - pad*2) / (LAYERS.length-1);
+    LAYERS.forEach((cnt,li)=>{
+      const nspc = cnt>1 ? (canvas.height-pad*2)/(cnt-1) : 0;
+      for(let ni=0;ni<cnt;ni++){
+        nodes.push({
+          x: pad+li*lspc,
+          y: cnt===1 ? canvas.height/2 : pad+ni*nspc,
+          li, ni,
+          ph: Math.random()*Math.PI*2,
+          sp: .025+Math.random()*.025
+        });
+      }
+    });
+  }
+
+  const sigs = [];
+  function spawnSig(){
+    const fromLi = Math.floor(Math.random()*(LAYERS.length-1));
+    const fromN = nodes.filter(n=>n.li===fromLi);
+    const toN = nodes.filter(n=>n.li===fromLi+1);
+    if(!fromN.length||!toN.length) return;
+    sigs.push({
+      from: fromN[Math.floor(Math.random()*fromN.length)],
+      to:   toN[Math.floor(Math.random()*toN.length)],
+      t:0, sp:.009+Math.random()*.013
+    });
+  }
+  setInterval(spawnSig, 180);
+
+  function frame(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // connections
+    for(let li=0;li<LAYERS.length-1;li++){
+      const fn=nodes.filter(n=>n.li===li), tn=nodes.filter(n=>n.li===li+1);
+      fn.forEach(f=>tn.forEach(t=>{
+        ctx.beginPath();
+        ctx.moveTo(f.x,f.y); ctx.lineTo(t.x,t.y);
+        ctx.strokeStyle=GOLD+'0.08)'; ctx.lineWidth=.6; ctx.stroke();
+      }));
+    }
+    // signals
+    for(let i=sigs.length-1;i>=0;i--){
+      const s=sigs[i]; s.t+=s.sp;
+      if(s.t>=1){ sigs.splice(i,1); continue; }
+      const x=s.from.x+(s.to.x-s.from.x)*s.t;
+      const y=s.from.y+(s.to.y-s.from.y)*s.t;
+      const gr=ctx.createRadialGradient(x,y,0,x,y,12);
+      gr.addColorStop(0,GOLD+'0.9)'); gr.addColorStop(1,GOLD+'0)');
+      ctx.beginPath(); ctx.arc(x,y,12,0,Math.PI*2);
+      ctx.fillStyle=gr; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2);
+      ctx.fillStyle=GOLD+'1)'; ctx.fill();
+    }
+    // nodes
+    nodes.forEach(n=>{
+      n.ph+=n.sp;
+      const g=0.28+0.28*Math.sin(n.ph);
+      const gr=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,18);
+      gr.addColorStop(0,GOLD+(0.18+g*0.32)+')');
+      gr.addColorStop(1,GOLD+'0)');
+      ctx.beginPath(); ctx.arc(n.x,n.y,18,0,Math.PI*2);
+      ctx.fillStyle=gr; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x,n.y,6,0,Math.PI*2);
+      ctx.fillStyle=GOLD+(0.65+g*0.35)+')'; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x,n.y,10,0,Math.PI*2);
+      ctx.strokeStyle=GOLD+(0.25+g*0.2)+')'; ctx.lineWidth=1.2; ctx.stroke();
+    });
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+  frame();
+})();
+
+/* ── PARALLAX ────────────────────────────────────────────── */
+window.addEventListener('scroll',()=>{
+  const hc = document.getElementById('hero-canvas');
+  if(hc) hc.style.transform='translateY('+(window.scrollY*.28)+'px)';
+},{passive:true});
+
+/* ── SCROLL REVEAL ───────────────────────────────────────── */
+function initReveal(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+  },{threshold:.1});
+  document.querySelectorAll('.fu,.fi').forEach(el=>obs.observe(el));
+}
+
+/* ── COUNTERS ────────────────────────────────────────────── */
+(function(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el = e.target;
+      const target = +el.dataset.target;
+      const pre = el.dataset.pre||'';
+      const suf = el.dataset.suf||'';
+      let cur=0; const step=target/55;
+      const go=()=>{
+        cur=Math.min(cur+step,target);
+        el.textContent=pre+Math.floor(cur)+suf;
+        if(cur<target) requestAnimationFrame(go);
+      };
+      go();
+      obs.unobserve(el);
+    });
+  },{threshold:.5});
+  document.querySelectorAll('.stat-num[data-target]').forEach(el=>obs.observe(el));
+})();
+
+/* ── 3D CARD TILT ────────────────────────────────────────── */
+document.querySelectorAll('.case-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=e.clientX-r.left, y=e.clientY-r.top;
+    const cx=r.width/2, cy=r.height/2;
+    const rx=(y-cy)/cy*-7, ry=(x-cx)/cx*7;
+    card.style.transition='transform .08s ease';
+    card.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transition='transform .5s ease, border-color .4s, box-shadow .4s';
+    card.style.transform='';
+  });
+});
+</script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Jordão & Co",
+  "url": "https://www.jordaoeconegocio.com.br",
+  "description": "Empresa de soluções digitais, desenvolvimento de software, inteligência artificial e automação para empresas.",
+  "email": "jordaoecoltda@gmail.com",
+  "sameAs": [
+    "https://www.instagram.com/jordaoeco.negocios"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "itemOffered": [
+      {"@type":"Service","name":"Desenvolvimento de Aplicativos"},
+      {"@type":"Service","name":"Sistemas Web Personalizados"},
+      {"@type":"Service","name":"Inteligência Artificial"},
+      {"@type":"Service","name":"Agentes de IA"},
+      {"@type":"Service","name":"Automação de Processos"},
+      {"@type":"Service","name":"Sistemas para Licitações"},
+      {"@type":"Service","name":"Sistemas para Advocacia"},
+      {"@type":"Service","name":"ERP e Gestão Empresarial"}
+    ]
+  }
+}
 </script>
 </body>
 </html>
