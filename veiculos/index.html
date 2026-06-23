@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Esquadrão IA · para lojas de revenda de veículos</title>
+<!--
+  ============================================================
+  VERSÃO DE NICHO (revenda de veículos) — teste A/B contra a vendas.html genérica.
+  Troque [CHECKOUT] e [CHECKOUT-PRO] pelos links da plataforma antes de publicar.
+  ============================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0D0B; --char:#1A1714; --cream:#F4EFE4; --cream-dim:#CFC7B6;
+    --gold:#C9A24B; --gold-soft:#E4C77E; --muted:#8A8175; --line:rgba(201,162,75,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:var(--ink);color:var(--cream);font-family:'Jost',sans-serif;line-height:1.6;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;background:radial-gradient(60% 35% at 50% 0%,rgba(201,162,75,.10),transparent 70%);pointer-events:none;z-index:0}
+  .wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:0 22px}
+  section{padding:clamp(54px,9vw,90px) 0}
+  .eyebrow{font-family:'Jost';font-weight:400;letter-spacing:.28em;text-transform:uppercase;font-size:.72rem;color:var(--gold);margin-bottom:16px}
+  h1{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(2rem,6.5vw,3.4rem);line-height:1.08;color:#F7F2E6;letter-spacing:.5px}
+  h2{font-family:'Cinzel',serif;font-weight:600;font-size:clamp(1.5rem,4.5vw,2.2rem);line-height:1.15;color:#F4EFE3;margin-bottom:10px}
+  .lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2.6vw,1.5rem);color:var(--cream-dim);font-style:italic;margin-top:18px}
+  p{color:var(--cream-dim);font-weight:300;font-size:1.04rem}
+  .cta{display:inline-block;margin-top:26px;padding:16px 30px;border-radius:14px;background:linear-gradient(135deg,var(--gold),#a8843a);color:#1a1308;font-family:'Cinzel',serif;font-weight:600;letter-spacing:.5px;font-size:1rem;text-decoration:none;box-shadow:0 10px 30px rgba(201,162,75,.25);transition:.2s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(201,162,75,.35)}
+  .micro{font-size:.82rem;color:var(--muted);margin-top:12px}
+
+  /* hero */
+  .hero{padding-top:clamp(70px,12vw,120px);text-align:center}
+
+  /* pains */
+  .grid{display:grid;gap:16px;margin-top:30px}
+  @media(min-width:620px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+  .card{border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(180deg,#161310,#100E0B)}
+  .card h4{font-family:'Cinzel',serif;color:var(--gold-soft);font-size:1.02rem;font-weight:600;margin-bottom:8px;letter-spacing:.5px}
+  .card p{font-size:.95rem}
+
+  /* steps */
+  .step{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .num{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:600}
+  .step h4{font-family:'Jost';font-weight:500;color:var(--cream);font-size:1.05rem;margin-bottom:2px}
+
+  /* squad list */
+  .use{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .use:last-child{border-bottom:none}
+  .use .ic{flex:none;color:var(--gold);font-size:1.2rem}
+  .use b{color:var(--cream);font-weight:500;font-family:'Jost'}
+  .use span{display:block;color:var(--cream-dim);font-weight:300;font-size:.96rem;margin-top:2px}
+
+  /* proof */
+  .proof{border:1px solid var(--gold);border-radius:20px;padding:clamp(26px,5vw,40px);background:linear-gradient(180deg,#181410,#110F0C);text-align:center}
+  .proof .q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.3rem,3.4vw,1.7rem);color:#F4EFE3;line-height:1.4}
+  .proof .who{margin-top:18px;font-size:.9rem;color:var(--muted);letter-spacing:.5px}
+
+  /* offer */
+  .tiers{display:grid;gap:18px;margin-top:30px}
+  @media(min-width:720px){.tiers{grid-template-columns:repeat(3,1fr)}}
+  .tier{border:1px solid var(--line);border-radius:18px;padding:26px 22px;background:linear-gradient(180deg,#151210,#0F0D0B);display:flex;flex-direction:column}
+  .tier.feature{border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,162,75,.25),0 20px 50px rgba(0,0,0,.4)}
+  .tier .tag{font-family:'Cinzel',serif;letter-spacing:1px;font-size:.85rem;color:var(--gold-soft);text-transform:uppercase}
+  .tier .pr{font-family:'Cinzel',serif;font-size:2.1rem;color:#F7F2E6;margin:10px 0 2px}
+  .tier ul{list-style:none;margin:14px 0 20px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .tier li{font-size:.95rem;color:var(--cream-dim);padding-left:22px;position:relative;font-weight:300}
+  .tier li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .tier .cta{margin-top:auto;width:100%;text-align:center;padding:13px}
+  .badge{display:inline-block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#1a1308;background:var(--gold-soft);padding:4px 10px;border-radius:20px;margin-bottom:8px;align-self:flex-start;font-weight:600}
+
+  /* faq */
+  details{border-bottom:1px solid var(--line);padding:18px 0}
+  summary{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:#F4EFE3;cursor:pointer;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  details p{margin-top:10px;font-size:.98rem}
+
+  .center{text-align:center}
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Para lojas de revenda de veículos</p>
+    <h1>Pare de perder venda porque o lead esfriou.</h1>
+    <p class="lead">Um time de agentes de IA que responde, qualifica e faz o follow-up dos leads da sua loja — em segundos, sem você aumentar a equipe.</p>
+    <a class="cta" href="#oferta">Quero ativar na minha loja</a>
+    <p class="micro">Acesso imediato · Sem instalar nada · Garantia de 7 dias</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Todo lead que demora, esfria.</h2>
+    <p>E lead frio compra na loja do lado. O problema quase nunca é falta de lead — é o que acontece depois que ele chega.</p>
+    <div class="grid grid-3">
+      <div class="card"><h4>Resposta lenta</h4><p>O cliente mandou mensagem às 21h. Quando o vendedor viu, já tinha comprado em outro lugar.</p></div>
+      <div class="card"><h4>Curioso x comprador</h4><p>O vendedor gasta o dia com quem só "tá olhando" e não sobra tempo pra quem tem entrada e quer fechar.</p></div>
+      <div class="card"><h4>Follow-up que não acontece</h4><p>O lead pediu pra "pensar" e sumiu. Ninguém voltou. A venda foi embora calada.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Como funciona</h2>
+    <p>Sem programar, sem técnico, sem instalar. Você usa a IA que já existe — só dá a ela o "cérebro" certo.</p>
+    <div style="margin-top:24px">
+      <div class="step"><div class="num">1</div><div><h4>Copie o agente</h4><p style="margin:0">Cada agente é um especialista pronto, num arquivo de texto.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h4>Cole na sua IA</h4><p style="margin:0">No ChatGPT ou no Claude. Ele já assume a função na hora.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h4>Use no dia a dia</h4><p style="margin:0">Responde, qualifica e escreve por você. Saiu torto? Ajusta uma linha e melhora.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>O esquadrão da sua loja</h2>
+    <p>Os agentes que mais movem o ponteiro numa revenda:</p>
+    <div style="margin-top:22px">
+      <div class="use"><div class="ic">✦</div><div><b>Qualificador de leads</b><span>Separa o curioso de quem tem entrada, carro na troca e quer fechar nos próximos 30 dias.</span></div></div>
+      <div class="use"><div class="ic">✦</div><div><b>Anúncio de veículo</b><span>Escreve o anúncio de cada carro pra OLX e Marketplace de um jeito que faz a pessoa chamar.</span></div></div>
+      <div class="use"><div class="ic">✦</div><div><b>Quebra-objeção</b><span>Transforma "tá caro" e "vou pensar" em resposta pronta pra continuar a conversa.</span></div></div>
+      <div class="use"><div class="ic">✦</div><div><b>Follow-up</b><span>Reaquece o lead que sumiu, com a mensagem certa na hora certa.</span></div></div>
+      <div class="use"><div class="ic">✦</div><div><b>Atendimento rápido</b><span>Responde as dúvidas mais comuns na hora, mesmo fora do horário comercial.</span></div></div>
+    </div>
+    <p class="micro" style="margin-top:18px">São só alguns dos 50 agentes do pacote — os outros cobrem financeiro, gestão, marketing e mais.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="proof">
+      <p class="q">"Esses mesmos agentes já rodam numa revenda de veículos de verdade — qualificando e respondendo leads todos os dias. Não é teoria: é o que está em campo."</p>
+      <p class="who">— um cliente real da Jordão &amp; Co</p>
+    </div>
+  </div>
+</section>
+
+<section id="oferta">
+  <div class="wrap center">
+    <p class="eyebrow">Escolha seu acesso</p>
+    <h2>Ative o esquadrão na sua loja</h2>
+    <div class="tiers">
+      <div class="tier">
+        <span class="tag">Starter</span>
+        <div class="pr">R$47</div>
+        <ul>
+          <li>Agentes essenciais de vendas e atendimento</li>
+          <li>Guia "Comece aqui"</li>
+          <li>Acesso imediato</li>
+        </ul>
+        <a class="cta" href="[CHECKOUT]">Começar</a>
+      </div>
+      <div class="tier feature">
+        <span class="badge">Mais escolhido</span>
+        <span class="tag">Completo</span>
+        <div class="pr">R$97</div>
+        <ul>
+          <li>Os 50 agentes, das 8 áreas</li>
+          <li>Guia "Comece aqui" + aula</li>
+          <li>Acesso vitalício + atualizações</li>
+        </ul>
+        <a class="cta" href="[CHECKOUT]">Quero o completo</a>
+      </div>
+      <div class="tier">
+        <span class="tag">Pro</span>
+        <div class="pr">R$297</div>
+        <ul>
+          <li>Tudo do Completo</li>
+          <li>3 agentes premium (Closer, Diagnóstico 90 Dias, Raio-X do Concorrente)</li>
+          <li>1 mentoria em grupo + prioridade no suporte</li>
+        </ul>
+        <a class="cta" href="[CHECKOUT-PRO]">Quero o Pro</a>
+      </div>
+    </div>
+    <p class="micro">Garantia de 7 dias. Não curtiu? Devolvemos seu dinheiro.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="center" style="margin-bottom:24px">Perguntas rápidas</h2>
+    <details><summary>Preciso saber de tecnologia?</summary><p>Não. Se você manda mensagem no celular, sabe usar. É copiar e colar — sem instalar nada.</p></details>
+    <details><summary>Funciona só pra loja de carro?</summary><p>Os agentes servem pra qualquer negócio. Aqui a gente mostra como uma revenda usa, mas o pacote completo cobre as 8 áreas do seu negócio.</p></details>
+    <details><summary>Funciona com o ChatGPT ou Claude grátis?</summary><p>Sim. Roda nas versões gratuitas e fica ainda melhor nas pagas.</p></details>
+    <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. É só pedir o reembolso dentro do prazo, sem letra miúda.</p></details>
+  </div>
+</section>
+
+<section class="center">
+  <div class="wrap">
+    <h2>Sua loja respondendo todo lead na hora.</h2>
+    <a class="cta" href="#oferta">Quero ativar na minha loja</a>
+    <p class="micro">Acesso imediato · Garantia de 7 dias</p>
+  </div>
+</section>
+
+<footer>Jordão &amp; Co · Esquadrão IA</footer>
+</body>
+</html>
