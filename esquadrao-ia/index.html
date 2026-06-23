@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Esquadrão IA · Jordão & Co — 50 agentes de IA pra sua operação</title>
+<!--
+  ============================================================
+  ANTES DE PUBLICAR, troque os placeholders:
+  [CHECKOUT]      → link do seu checkout (Kiwify/Greenn) — está em vários botões
+  [CHECKOUT-PRO]  → link do tier Pro (se tiver)
+  [AULA]          → link da aula ao vivo (bônus)
+  ============================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0D0B; --char:#16130F; --char-2:#1E1A15;
+    --cream:#F4EFE4; --cream-dim:#CFC7B6; --muted:#8A8175;
+    --gold:#C9A24B; --gold-soft:#E4C77E;
+    --line:rgba(201,162,75,.18);
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink); color:var(--cream);
+    font-family:'Jost',sans-serif; font-weight:300;
+    line-height:1.6; overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+  section{position:relative; padding:64px 0}
+  .eyebrow{
+    font-family:'Jost'; font-weight:500; font-size:11px;
+    letter-spacing:4px; text-transform:uppercase; color:var(--gold);
+    display:inline-block; margin-bottom:18px;
+  }
+  h1,h2,h3{font-weight:500; line-height:1.12}
+  .serif{font-family:'Cormorant Garamond',serif}
+  .display{font-family:'Cinzel',serif}
+  em{font-style:italic;color:var(--gold-soft)}
+  a.btn{
+    display:inline-block;text-align:center;padding:16px 30px;border-radius:13px;
+    background:linear-gradient(135deg,var(--gold),#a8843a);color:#1a1308;
+    font-family:'Cinzel',serif;font-weight:600;letter-spacing:.5px;font-size:16px;
+    text-decoration:none;box-shadow:0 10px 30px rgba(201,162,75,.22);transition:.2s;
+  }
+  a.btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(201,162,75,.3)}
+  .center{text-align:center}
+
+  /* HERO */
+  .hero{padding:88px 0 56px;text-align:center;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 50% at 50% 0%, rgba(201,162,75,.12), transparent 70%);
+    pointer-events:none;
+  }
+  .hero .mark{font-family:'Cinzel',serif;font-size:13px;letter-spacing:6px;color:var(--gold);margin-bottom:26px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,8vw,62px);font-weight:600;letter-spacing:.5px}
+  .hero h1 .display{display:block;font-family:'Cinzel',serif;font-size:clamp(26px,6vw,44px);color:var(--gold-soft);margin-top:6px}
+  .hero p.sub{max-width:620px;margin:22px auto 30px;font-size:18px;color:var(--cream-dim)}
+  .hero .trust{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:26px;font-size:13px;color:var(--muted)}
+  .hero .trust span{display:flex;align-items:center;gap:7px}
+  .hero .trust span::before{content:"✦";color:var(--gold)}
+
+  /* PROBLEM */
+  .problem h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,5vw,40px);max-width:760px}
+  .problem .lead{font-size:18px;color:var(--cream-dim);max-width:680px;margin-top:18px}
+  .pains{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:34px}
+  .pain{background:var(--char);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .pain h4{font-family:'Cinzel',serif;font-size:15px;color:var(--gold-soft);margin-bottom:8px;font-weight:500}
+  .pain p{font-size:15px;color:var(--cream-dim)}
+
+  /* SHIFT */
+  .shift{background:linear-gradient(180deg,#120F0C,var(--ink));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .shift .grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .shift .col{padding:30px 26px}
+  .shift .col.old{background:transparent;border-right:1px solid var(--line)}
+  .shift .col.new{background:rgba(201,162,75,.05)}
+  .shift .col h3{font-family:'Cinzel',serif;font-size:14px;letter-spacing:2px;margin-bottom:16px}
+  .shift .old h3{color:var(--muted)} .shift .new h3{color:var(--gold)}
+  .shift ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .shift li{font-size:15px;padding-left:24px;position:relative;color:var(--cream-dim)}
+  .shift .old li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+  .shift .new li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+
+  /* AREAS */
+  .areas h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,5vw,40px);text-align:center;margin-bottom:8px}
+  .areas .sub{text-align:center;color:var(--cream-dim);margin-bottom:36px}
+  .area-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .area{background:var(--char);border:1px solid var(--line);border-radius:14px;padding:20px;transition:.2s}
+  .area:hover{border-color:var(--gold);transform:translateY(-3px)}
+  .area .n{font-family:'Cinzel',serif;color:var(--gold);font-size:13px;letter-spacing:1px}
+  .area h4{font-family:'Cormorant Garamond',serif;font-size:21px;margin:6px 0 8px;color:var(--cream)}
+  .area p{font-size:14px;color:var(--cream-dim)}
+
+  /* SQUADS */
+  .squads{background:linear-gradient(180deg,var(--ink),#110E0B)}
+  .squads h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,5vw,40px);text-align:center;margin-bottom:8px}
+  .squads .sub{text-align:center;color:var(--cream-dim);margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto}
+  .squad-list{display:flex;flex-direction:column;gap:12px;max-width:760px;margin:0 auto}
+  .squad{display:flex;align-items:center;gap:18px;background:var(--char);border:1px solid var(--line);border-radius:14px;padding:18px 22px}
+  .squad .ic{font-size:22px}
+  .squad b{font-family:'Cinzel',serif;font-weight:600;color:var(--gold-soft);font-size:15px;letter-spacing:.5px}
+  .squad span{display:block;font-size:14px;color:var(--cream-dim);margin-top:3px}
+
+  /* FOR WHO */
+  .forwho .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .forwho .card{border:1px solid var(--line);border-radius:16px;padding:26px;background:var(--char)}
+  .forwho .yes{border-color:rgba(201,162,75,.4)}
+  .forwho h3{font-family:'Cinzel',serif;font-size:15px;letter-spacing:1px;margin-bottom:16px}
+  .forwho .yes h3{color:var(--gold)} .forwho .no h3{color:var(--muted)}
+  .forwho ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .forwho li{font-size:15px;color:var(--cream-dim);padding-left:24px;position:relative}
+  .forwho .yes li::before{content:"✓";position:absolute;left:0;color:var(--gold)}
+  .forwho .no li::before{content:"✕";position:absolute;left:0;color:var(--muted)}
+
+  /* PRICING */
+  .pricing{background:linear-gradient(180deg,#110E0B,var(--ink))}
+  .pricing h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,5vw,40px);text-align:center;margin-bottom:8px}
+  .pricing .sub{text-align:center;color:var(--cream-dim);margin-bottom:40px}
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:stretch}
+  .tier{border:1px solid var(--line);border-radius:18px;padding:28px 24px;background:var(--char);display:flex;flex-direction:column}
+  .tier.feat{border-color:var(--gold);background:linear-gradient(180deg,#1a1510,#120F0C);box-shadow:0 16px 50px rgba(0,0,0,.4);position:relative}
+  .tier.feat .tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1308;font-family:'Cinzel',serif;font-size:11px;font-weight:600;letter-spacing:1px;padding:5px 14px;border-radius:20px}
+  .tier .tname{font-family:'Cinzel',serif;font-size:16px;letter-spacing:1px;color:var(--gold-soft)}
+  .tier .tprice{font-family:'Cinzel',serif;font-size:38px;margin:12px 0 2px;color:var(--cream)}
+  .tier .tprice small{font-size:15px;color:var(--muted)}
+  .tier ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:18px 0 24px;flex:1}
+  .tier li{font-size:14.5px;color:var(--cream-dim);padding-left:22px;position:relative}
+  .tier li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .tier a.btn{width:100%}
+  .tier.muted a.btn{background:transparent;border:1px solid var(--gold);color:var(--gold-soft);box-shadow:none}
+
+  /* GUARANTEE */
+  .guarantee{text-align:center}
+  .seal{width:90px;height:90px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-family:'Cinzel',serif;color:var(--gold);font-size:13px;letter-spacing:1px;text-align:center;line-height:1.2}
+  .guarantee h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,5vw,36px)}
+  .guarantee p{max-width:560px;margin:16px auto 0;color:var(--cream-dim);font-size:17px}
+
+  /* FAQ */
+  .faq h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,5vw,36px);text-align:center;margin-bottom:32px}
+  details{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;background:var(--char);overflow:hidden}
+  summary{padding:18px 20px;cursor:pointer;font-family:'Jost';font-weight:500;font-size:16px;color:var(--cream);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--gold);font-size:22px}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 20px 18px;color:var(--cream-dim);font-size:15px}
+
+  /* FINAL */
+  .final{text-align:center;background:linear-gradient(180deg,var(--ink),#120F0C)}
+  .final h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,6vw,46px);font-weight:600}
+  .final p{max-width:540px;margin:18px auto 28px;color:var(--cream-dim);font-size:17px}
+  .final .trust{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--muted)}
+  .final .trust span{display:flex;align-items:center;gap:7px}
+  .final .trust span::before{content:"✦";color:var(--gold)}
+
+  footer{border-top:1px solid var(--line);padding:40px 22px;text-align:center}
+  footer .amp{font-family:'Cormorant Garamond',serif;font-size:40px;color:var(--gold);line-height:1}
+  footer .nm{font-family:'Cinzel',serif;letter-spacing:3px;font-size:12px;color:var(--cream-dim);margin:10px 0 18px}
+  footer .legal{max-width:680px;margin:0 auto;font-size:12px;color:var(--muted);line-height:1.6}
+
+  @media(max-width:640px){
+    .shift .grid{grid-template-columns:1fr}
+    .shift .col.old{border-right:none;border-bottom:1px solid var(--line)}
+    .forwho .cols{grid-template-columns:1fr}
+    section{padding:48px 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="mark">JORDÃO &amp; CO · TECNOLOGIA &amp; SOLUÇÕES</div>
+    <h1>Monte um time que não dorme.<span class="display">Esquadrão IA</span></h1>
+    <p class="sub">50 agentes de inteligência artificial, prontos pra assumir as funções que travam o seu dia — vendas, conteúdo, atendimento, cobrança. Copia, cola e põe pra trabalhar.</p>
+    <a class="btn" href="[CHECKOUT]">Quero meu esquadrão por R$ 97</a>
+    <div class="trust"><span>Acesso imediato</span><span>Garantia de 7 dias</span><span>Acesso vitalício</span></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="wrap">
+    <span class="eyebrow">O gargalo</span>
+    <h2 class="serif">Se a empresa <em>trava quando você para</em>, o problema não é falta de esforço. É falta de braço.</h2>
+    <p class="lead">Você faz o orçamento, responde o cliente, cria o post, cobra o atrasado e ainda tenta crescer. Não dá. E contratar gente pra cada função custa caro e demora.</p>
+    <div class="pains">
+      <div class="pain"><h4>O lead esfria</h4><p>Demorou pra responder a mensagem e a venda foi pro concorrente.</p></div>
+      <div class="pain"><h4>O conteúdo trava</h4><p>"O que eu posto hoje?" — e mais um dia sem aparecer.</p></div>
+      <div class="pain"><h4>A cobrança encosta</h4><p>É desconfortável cobrar, então o dinheiro fica na mesa.</p></div>
+      <div class="pain"><h4>Tudo passa por você</h4><p>Você é o gargalo. E gargalo não escala.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHIFT -->
+<section class="shift">
+  <div class="wrap">
+    <span class="eyebrow">A virada</span>
+    <h2 class="serif" style="font-size:clamp(24px,5vw,36px);margin-bottom:26px">De <em>funcionário</em> que você não tem pra <em>agente</em> que você ativa em minutos.</h2>
+    <div class="grid">
+      <div class="col old">
+        <h3>CONTRATAR GENTE</h3>
+        <ul>
+          <li>Salário, encargos, treinamento</li>
+          <li>Semanas pra começar a render</li>
+          <li>Falta, atrasa, pede aumento</li>
+          <li>Um por função</li>
+        </ul>
+      </div>
+      <div class="col new">
+        <h3>ATIVAR UM AGENTE</h3>
+        <ul>
+          <li>Pronto, sem custo recorrente de pessoal</li>
+          <li>Trabalhando em minutos</li>
+          <li>24h, sem faltar, sem reclamar</li>
+          <li>50 especialistas no mesmo pacote</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section class="areas">
+  <div class="wrap">
+    <h2 class="serif">8 áreas. 50 especialistas.</h2>
+    <p class="sub">Cada agente assume uma função real da operação.</p>
+    <div class="area-grid">
+      <div class="area"><div class="n">01</div><h4>Marketing &amp; Conteúdo</h4><p>Copywriter, social media, carrossel, planejamento e análise de criativo.</p></div>
+      <div class="area"><div class="n">02</div><h4>Vendas</h4><p>SDR, closer, follow-up, CRM e quebra-objeções.</p></div>
+      <div class="area"><div class="n">03</div><h4>Atendimento</h4><p>SAC, FAQ, pós-venda, satisfação e recuperação de cliente.</p></div>
+      <div class="area"><div class="n">04</div><h4>Financeiro</h4><p>Cobrança, fluxo de caixa, relatórios e precificação.</p></div>
+      <div class="area"><div class="n">05</div><h4>Gestão</h4><p>Assistente executivo, projetos, processos, KPIs e reuniões.</p></div>
+      <div class="area"><div class="n">06</div><h4>RH &amp; Pessoas</h4><p>Triagem, recrutamento, onboarding, treinamento e feedback.</p></div>
+      <div class="area"><div class="n">07</div><h4>Tecnologia</h4><p>Automação, integração, dados, dashboard e documentação.</p></div>
+      <div class="area"><div class="n">08</div><h4>Autoridade</h4><p>Ghostwriter, storytelling, marca pessoal, pitch e pesquisa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SQUADS -->
+<section class="squads">
+  <div class="wrap">
+    <span class="eyebrow center" style="display:block;text-align:center">O diferencial</span>
+    <h2 class="serif">Não é lista de prompt. É time montado.</h2>
+    <p class="sub">Os <em>esquadrões</em> são combos prontos — agentes que trabalham juntos numa função, um entregando pro outro.</p>
+    <div class="squad-list">
+      <div class="squad"><span class="ic">🤝</span><div><b>Esquadrão Comercial</b><span>SDR + Closer + Follow-up + CRM + Quebra-Objeções</span></div></div>
+      <div class="squad"><span class="ic">🎯</span><div><b>Esquadrão Marketing</b><span>Copywriter + Social + Carrossel + Planejador + Analista de Criativos</span></div></div>
+      <div class="squad"><span class="ic">💰</span><div><b>Esquadrão Financeiro</b><span>Cobrança + Fluxo de Caixa + Relatórios + Precificação</span></div></div>
+      <div class="squad"><span class="ic">⚙️</span><div><b>Esquadrão Operação</b><span>Assistente Executivo + Gestor de Projetos + Processos + KPIs</span></div></div>
+      <div class="squad"><span class="ic">👑</span><div><b>Esquadrão Autoridade</b><span>Ghostwriter + Storytelling + Personal Branding</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="forwho">
+  <div class="wrap">
+    <span class="eyebrow">Pra quem é</span>
+    <h2 class="serif" style="font-size:clamp(24px,5vw,36px);margin-bottom:26px">Feito pra quem <em>toca o negócio</em> — não pra quem quer mais um curso.</h2>
+    <div class="cols">
+      <div class="card yes">
+        <h3>É PRA VOCÊ SE…</h3>
+        <ul>
+          <li>Você é dono ou toca um pequeno negócio</li>
+          <li>Sente que faz trabalho demais sozinho</li>
+          <li>Quer resultado essa semana, não daqui a meses</li>
+          <li>Topa copiar, colar e ajustar</li>
+        </ul>
+      </div>
+      <div class="card no">
+        <h3>NÃO É PRA VOCÊ SE…</h3>
+        <ul>
+          <li>Procura um botão mágico que faz tudo sozinho</li>
+          <li>Não vai abrir o material nem testar</li>
+          <li>Espera ganho garantido sem esforço</li>
+          <li>Quer só colecionar mais um produto</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="oferta">
+  <div class="wrap">
+    <h2 class="serif">Escolha seu esquadrão.</h2>
+    <p class="sub">Acesso imediato. Garantia de 7 dias em todos.</p>
+    <div class="tiers">
+      <div class="tier muted">
+        <div class="tname">STARTER</div>
+        <div class="tprice">R$ 47</div>
+        <ul>
+          <li>1 esquadrão à sua escolha (5 agentes)</li>
+          <li>Guia "Comece aqui"</li>
+          <li>Acesso vitalício</li>
+        </ul>
+        <a class="btn" href="[CHECKOUT]">Começar com o Starter</a>
+      </div>
+      <div class="tier feat">
+        <div class="tag">MAIS ESCOLHIDO</div>
+        <div class="tname">COMPLETO</div>
+        <div class="tprice">R$ 97 <small>à vista</small></div>
+        <ul>
+          <li>Os 50 agentes, das 8 áreas</li>
+          <li>Os 5 esquadrões montados</li>
+          <li>Aula ao vivo (integração)</li>
+          <li>Guia + catálogo completo</li>
+          <li>Acesso vitalício + atualizações</li>
+        </ul>
+        <a class="btn" href="[CHECKOUT]">Quero o Completo</a>
+      </div>
+      <div class="tier muted">
+        <div class="tname">PRO</div>
+        <div class="tprice">R$ 297</div>
+        <ul>
+          <li>Tudo do Completo</li>
+          <li>3 agentes premium: Closer (quebra-objeção), Diagnóstico 90 Dias e Raio-X do Concorrente</li>
+          <li>1 mentoria em grupo</li>
+          <li>Prioridade no suporte</li>
+        </ul>
+        <a class="btn" href="[CHECKOUT-PRO]">Quero o Pro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+  <div class="wrap">
+    <div class="seal">7 DIAS<br>GARANTIA</div>
+    <h2 class="serif">Testa sem risco.</h2>
+    <p>Abre o material, usa os agentes. Se em 7 dias não fizer sentido pra você, devolvemos 100% — sem perguntas, sem burocracia.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="wrap">
+    <h2 class="serif">Perguntas que todo mundo faz</h2>
+    <details><summary>Preciso saber programar?</summary><p>Não. Se você copia e cola, você usa. Os agentes já vêm prontos — é só chamar pelo nome.</p></details>
+    <details><summary>Como funciona a entrega?</summary><p>Acesso imediato após a compra. Você recebe a pasta com os agentes organizados por área e um guia "Comece aqui" que te leva ao primeiro resultado em minutos.</p></details>
+    <details><summary>Preciso pagar algo além?</summary><p>O pack é seu pra sempre. Pra rodar os agentes você usa uma conta de IA (Claude ou ChatGPT) — o plano gratuito já dá pra começar. Pra uso pesado, um plano pago da IA rende mais.</p></details>
+    <details><summary>Funciona no ChatGPT ou só no Claude?</summary><p>Funciona nos dois. Os agentes são prompts prontos — rodam em qualquer IA boa. O Claude Code é só o modo mais avançado, opcional.</p></details>
+    <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia incondicional. Não fez sentido, devolvemos 100%, sem perguntas.</p></details>
+    <details><summary>Os 50 já vêm prontos?</summary><p>Você começa com os agentes-vitrine prontos pra usar hoje e recebe os demais nas atualizações — tudo no acesso vitalício, sem pagar de novo.</p></details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="serif">Bora colocar seu time<br>pra trabalhar.</h2>
+    <p>50 agentes que não dormem, não faltam e não pedem aumento. Você só precisa chamar pro expediente.</p>
+    <a class="btn" href="[CHECKOUT]">Quero meu esquadrão por R$ 97</a>
+    <div class="trust"><span>Compra segura</span><span>Acesso imediato</span><span>Garantia de 7 dias</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="amp">&amp;</div>
+  <div class="nm">JORDÃO &amp; CO · TECNOLOGIA &amp; SOLUÇÕES</div>
+  <p class="legal">Os agentes potencializam e automatizam tarefas da sua operação. Resultados variam conforme aplicação, mercado e esforço de cada negócio — não prometemos ganho garantido. Este produto não substitui aconselhamento profissional especializado.</p>
+</footer>
+
+</body>
+</html>
