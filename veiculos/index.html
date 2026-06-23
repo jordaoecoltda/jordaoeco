@@ -6,8 +6,8 @@
 <title>Esquadrão IA · para lojas de revenda de veículos</title>
 <!--
   ============================================================
-  VERSÃO DE NICHO (revenda de veículos) — teste A/B contra a vendas.html genérica.
-  Troque [CHECKOUT] e [CHECKOUT-PRO] pelos links da plataforma antes de publicar.
+  VERSÃO DE NICHO (revenda de veículos) — oferta única R$27.
+  Checkout Kiwify e pixel da Meta já configurados nesta versão.
   ============================================================
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,6 +82,23 @@
   .center{text-align:center}
   footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line)}
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1708909223888516');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1708909223888516&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -145,42 +162,25 @@
 
 <section id="oferta">
   <div class="wrap center">
-    <p class="eyebrow">Escolha seu acesso</p>
+    <p class="eyebrow">Oferta de lançamento</p>
     <h2>Ative o esquadrão na sua loja</h2>
-    <div class="tiers">
-      <div class="tier">
-        <span class="tag">Starter</span>
-        <div class="pr">R$47</div>
-        <ul>
-          <li>Agentes essenciais de vendas e atendimento</li>
-          <li>Guia "Comece aqui"</li>
-          <li>Acesso imediato</li>
-        </ul>
-        <a class="cta" href="[CHECKOUT]">Começar</a>
-      </div>
+    <div style="max-width:420px;margin:30px auto 0">
       <div class="tier feature">
-        <span class="badge">Mais escolhido</span>
-        <span class="tag">Completo</span>
-        <div class="pr">R$97</div>
-        <ul>
-          <li>Os 50 agentes, das 8 áreas</li>
-          <li>Guia "Comece aqui" + aula</li>
-          <li>Acesso vitalício + atualizações</li>
+        <span class="badge">Acesso completo</span>
+        <span class="tag">Esquadrão IA</span>
+        <div style="display:flex;align-items:baseline;gap:12px;justify-content:center;margin:8px 0 2px">
+          <span style="color:var(--muted);text-decoration:line-through;font-family:'Jost';font-size:1.15rem">R$97</span>
+          <span class="pr" style="margin:0">R$27</span>
+        </div>
+        <ul style="text-align:left">
+          <li>Os 50 agentes, das 8 áreas do seu negócio</li>
+          <li>Guia "Comece aqui" + aula de implementação</li>
+          <li>Acesso vitalício + todas as atualizações</li>
         </ul>
-        <a class="cta" href="[CHECKOUT]">Quero o completo</a>
-      </div>
-      <div class="tier">
-        <span class="tag">Pro</span>
-        <div class="pr">R$297</div>
-        <ul>
-          <li>Tudo do Completo</li>
-          <li>3 agentes premium (Closer, Diagnóstico 90 Dias, Raio-X do Concorrente)</li>
-          <li>1 mentoria em grupo + prioridade no suporte</li>
-        </ul>
-        <a class="cta" href="[CHECKOUT-PRO]">Quero o Pro</a>
+        <a class="cta" href="https://pay.kiwify.com.br/GVoFKs6" onclick="fbq('track','InitiateCheckout')">Quero ativar agora</a>
       </div>
     </div>
-    <p class="micro">Garantia de 7 dias. Não curtiu? Devolvemos seu dinheiro.</p>
+    <p class="micro">Acesso imediato · Garantia de 7 dias. Não curtiu? Devolvemos seu dinheiro.</p>
   </div>
 </section>
 
